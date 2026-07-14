@@ -221,6 +221,11 @@
       <button type="submit" class="btn btn-solid btn-wide">Saada päring</button>
       <p class="form-note">Päring on tasuta ega kohusta sind millekski.</p>
     </form>
+    <div class="form-success" hidden>
+      <div class="form-success-icon">✓</div>
+      <h3>Päring saadetud!</h3>
+      <p>Aitäh! Võtame sinuga ühendust 24 tunni jooksul.</p>
+    </div>
   </div>
 </section>
 
@@ -280,6 +285,31 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.12 });
 revealTargets.forEach(el => observer.observe(el));
+</script>
+<script>
+(function () {
+  var form = document.querySelector('.inquiry-form');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Saadan…';
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function (res) {
+      if (!res.ok) throw new Error('send failed');
+      form.hidden = true;
+      document.querySelector('.form-success').hidden = false;
+    }).catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'Saada päring';
+      alert('Saatmine ebaõnnestus. Palun proovi uuesti või kirjuta otse: enrico@fellinforest.ee');
+    });
+  });
+})();
 </script>
 </body>
 </html>
