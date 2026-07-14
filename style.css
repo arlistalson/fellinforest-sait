@@ -115,7 +115,7 @@ a { color: var(--green); }
   color: #fff;
   background:
     linear-gradient(100deg, rgba(13, 42, 29, 0.82) 0%, rgba(13, 42, 29, 0.45) 55%, rgba(13, 42, 29, 0.2) 100%),
-    url("images/hero.jpg") center / cover no-repeat,
+    url("images/hero.webp") center / cover no-repeat,
     linear-gradient(140deg, #1d5c3f 0%, #14402c 55%, #0d2a1d 100%);
 }
 
