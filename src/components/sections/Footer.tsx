@@ -56,7 +56,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-copy">
-          <p>&copy; {new Date().getFullYear()} Fellin Forest. Kõik õigused kaitstud.</p>
+          <p>&copy; {new Date().getFullYear()} Fellin Forest OÜ – 17117278. Kõik õigused kaitstud.</p>
+          <p>Veebilehe valmistas <a href="https://talson.ee" target="_blank" rel="noopener noreferrer">talson.ee</a></p>
         </div>
       </div>
     </footer>
