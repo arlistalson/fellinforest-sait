@@ -1,63 +1,75 @@
 import { motion } from "framer-motion";
-import { cardPop, staggerContainer, staggerItem } from "../../motion/variants";
+import { staggerContainer, staggerItem } from "../../motion/variants";
+import PhoneIcon from "../icons/PhoneIcon";
 
 export default function Footer() {
   return (
     <footer id="kontakt" className="site-footer">
       <div className="container">
-        <div className="footer-top">
-          <h2>Eelistad rääkida inimesega?</h2>
-          <p className="footer-lead">
-            Helista ja arutame sinu metsa võimalused läbi – konsultatsioon on alati tasuta.
-          </p>
-          <motion.div
-            className="team-grid"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            <motion.div className="team-card" variants={staggerItem} {...cardPop}>
-              <div className="team-avatar">
-                <img src="/images/logo.png" alt="Fellin Forest" />
-              </div>
-              <h3>Enrico Orobko</h3>
-              <p className="team-role">Metsa ost ja pakkumised</p>
-              <p><a href="tel:+37258065274">+372 5806 5274</a></p>
-              <p><a href="mailto:enrico@fellinforest.ee">enrico@fellinforest.ee</a></p>
-            </motion.div>
+        <motion.div
+          className="footer-top"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerContainer}
+        >
+          <motion.div className="footer-col" variants={staggerItem}>
+            <h4>Menüü</h4>
+            <a href="#teenused">Teenused</a>
+            <a href="#raieoigus">Raieõigus</a>
+            <a href="#protsess">Kuidas käib</a>
+            <a href="#hinnaparing">Küsi pakkumist</a>
           </motion.div>
-        </div>
-        <div className="footer-inner">
-          <div>
-            <div className="logo footer-logo">
-              <img
-                src="/images/logo.png"
-                alt="Fellin Forest logo"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = "none";
-                }}
-              />
-              <span>Fellin<em>Forest</em></span>
-            </div>
-            <p>Ostame metsakinnistuid ja raieõigust üle Eesti.</p>
-          </div>
-          <div>
-            <h4>Kontakt</h4>
-            <p><a href="tel:+37258065274">+372 5806 5274</a></p>
-            <p><a href="mailto:enrico@fellinforest.ee">enrico@fellinforest.ee</a></p>
-          </div>
-          <div>
+
+          <motion.div className="footer-col" variants={staggerItem}>
             <h4>Teenused</h4>
-            <p><a href="#teenused">Metsakinnistute ost</a></p>
-            <p><a href="#raieoigus">Raieõiguse ost</a></p>
-            <p><a href="#teenused">Põllumaa ost</a></p>
-            <p><a href="#teenused">Metsamajandamine</a></p>
-          </div>
-        </div>
-        <div className="footer-copy">
-          <p>&copy; {new Date().getFullYear()} Fellin Forest OÜ – 17117278. Kõik õigused kaitstud.</p>
-          <p>Veebilehe valmistas <a href="https://talson.ee" target="_blank" rel="noopener noreferrer">talson.ee</a></p>
+            <a href="#teenused">Metsakinnistute ost</a>
+            <a href="#raieoigus">Raieõiguse ost</a>
+            <a href="#teenused">Põllumaa ost</a>
+            <a href="#teenused">Metsamajandamine</a>
+          </motion.div>
+
+          <motion.a
+            href="#"
+            className="footer-brand"
+            aria-label="Fellin Forest"
+            variants={staggerItem}
+          >
+            <img src="/images/logo3.png" alt="Fellin Forest" />
+          </motion.a>
+
+          <motion.div className="footer-col footer-col--right" variants={staggerItem}>
+            <h4>Kontakt</h4>
+            <span className="footer-name">Enrico Orobko</span>
+            <a href="tel:+37258065274" className="footer-call">
+              <PhoneIcon />
+              +372 5806 5274
+            </a>
+            <a href="mailto:enrico@fellinforest.ee">enrico@fellinforest.ee</a>
+          </motion.div>
+
+          <motion.div className="footer-col footer-col--right" variants={staggerItem}>
+            <h4>Ettevõte</h4>
+            <span>Fellin Forest OÜ</span>
+            <span>Registrikood 17117278</span>
+            <span>Lossi tn 15, 71003 Viljandi</span>
+          </motion.div>
+        </motion.div>
+
+        <div className="footer-bottom">
+          <span className="footer-brand-word">FELLIN FOREST</span>
+          <p className="footer-copy-text">
+            © {new Date().getFullYear()} Fellin Forest OÜ · Registrikood 17117278 ·
+            {" "}Veebilehe tegi{" "}
+            <a
+              href="https://talson.ee"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-credit"
+            >
+              talson.ee
+            </a>
+          </p>
         </div>
       </div>
     </footer>
