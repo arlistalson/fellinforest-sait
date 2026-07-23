@@ -35,7 +35,7 @@ export default function Footer() {
             aria-label="Fellin Forest"
             variants={staggerItem}
           >
-            <img src="/images/logo3.png" alt="Fellin Forest" />
+            <img src="/images/logo3-white.png" alt="Fellin Forest" />
           </motion.a>
 
           <motion.div className="footer-col footer-col--right" variants={staggerItem}>
