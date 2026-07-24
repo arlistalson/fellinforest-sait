@@ -105,8 +105,35 @@ a { color: var(--green); }
 .nav-cta:hover { background: var(--green-deep); }
 
 /* Mobile nav (hamburger + dropdown) — hidden on desktop */
-.nav-mobile-actions { display: none; align-items: center; gap: 10px; }
-.nav-cta-mobile { padding: 9px 16px; font-size: 0.9rem; white-space: nowrap; }
+
+/* iOS-style pill CTA (mobile only) */
+.nav-cta-mobile {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 100px;
+  background: linear-gradient(180deg, var(--green-bright) 0%, var(--green) 100%);
+  box-shadow:
+    0 1px 1px rgba(20, 64, 44, 0.22),
+    0 6px 16px rgba(29, 92, 63, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.nav-cta-mobile:hover { filter: brightness(1.05); }
+.nav-cta-mobile:active {
+  transform: scale(0.96);
+  box-shadow:
+    0 1px 3px rgba(20, 64, 44, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
 
 .nav-toggle {
   display: none;
@@ -751,18 +778,18 @@ a { color: var(--green); }
 @media (max-width: 760px) {
   .hero-card { padding: 64px 28px; }
   .hero-card h1 { font-size: 2.2rem; }
-  /* Mobile top bar: [ (empty) ] — [ logo ] — [ Küsi pakkumist + hamburger ] */
+  /* Mobile top bar: [ Küsi pakkumist ] — [ logo ] — [ hamburger ] */
   .header-inner {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    column-gap: 12px;
+    column-gap: 10px;
   }
   .site-header .nav-desktop { display: none; }
+  .header-inner .nav-cta-mobile { display: inline-flex; grid-column: 1; grid-row: 1; justify-self: start; }
   .header-inner .logo { grid-column: 2; grid-row: 1; justify-self: center; }
   .header-inner .logo img.logo-full { height: 52px; }
-  .header-inner .nav-mobile-actions { display: flex; grid-column: 3; grid-row: 1; justify-self: end; }
-  .header-inner .nav-toggle { display: inline-flex; }
+  .header-inner .nav-toggle { display: inline-flex; grid-column: 3; grid-row: 1; justify-self: end; }
   .header-inner .mobile-menu { display: flex; }
   .form-grid { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; }

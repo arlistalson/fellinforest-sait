@@ -55,6 +55,15 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="container header-inner">
+        {/* Mobile CTA — left */}
+        <a
+          href="#hinnaparing"
+          className="nav-cta-mobile"
+          onClick={() => setOpen(false)}
+        >
+          Küsi pakkumist
+        </a>
+
         <a href="#" className="logo">
           <img src="/images/logo3.png" alt="Fellin Forest" className="logo-full" />
         </a>
@@ -71,28 +80,19 @@ export default function Header() {
           </Button>
         </nav>
 
-        {/* Mobile: CTA + hamburger on the right */}
-        <div className="nav-mobile-actions">
-          <a
-            href="#hinnaparing"
-            className="nav-cta nav-cta-mobile"
-            onClick={() => setOpen(false)}
-          >
-            Küsi pakkumist
-          </a>
-          <button
-            type="button"
-            className={`nav-toggle${open ? " open" : ""}`}
-            aria-label={open ? "Sulge menüü" : "Ava menüü"}
-            aria-expanded={open}
-            aria-controls="mobileMenu"
-            onClick={() => setOpen((o) => !o)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </div>
+        {/* Mobile hamburger — right */}
+        <button
+          type="button"
+          className={`nav-toggle${open ? " open" : ""}`}
+          aria-label={open ? "Sulge menüü" : "Ava menüü"}
+          aria-expanded={open}
+          aria-controls="mobileMenu"
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
 
         {/* Mobile dropdown */}
         <div id="mobileMenu" className={`mobile-menu${open ? " open" : ""}`}>
