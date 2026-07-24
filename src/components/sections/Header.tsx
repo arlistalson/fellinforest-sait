@@ -55,15 +55,6 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        {/* Mobile CTA — left */}
-        <a
-          href="#hinnaparing"
-          className="nav-cta-mobile"
-          onClick={() => setOpen(false)}
-        >
-          Küsi pakkumist
-        </a>
-
         <a href="#" className="logo">
           <img src="/images/logo3.png" alt="Fellin Forest" className="logo-full" />
         </a>
@@ -101,6 +92,13 @@ export default function Header() {
               {l.label}
             </a>
           ))}
+          <a
+            href="#hinnaparing"
+            className="nav-cta-mobile"
+            onClick={() => setOpen(false)}
+          >
+            Küsi pakkumist
+          </a>
         </div>
       </div>
     </header>
