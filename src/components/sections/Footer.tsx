@@ -18,6 +18,7 @@ export default function Footer() {
             <a href="#teenused">Teenused</a>
             <a href="#raieoigus">Raieõigus</a>
             <a href="#protsess">Kuidas käib</a>
+            <a href="#kkk">KKK</a>
             <a href="#hinnaparing">Küsi pakkumist</a>
           </motion.div>
 

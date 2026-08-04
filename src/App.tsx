@@ -5,6 +5,7 @@ import Services from "./components/sections/Services";
 import RaieoigusSplit from "./components/sections/RaieoigusSplit";
 import Protsess from "./components/sections/Protsess";
 import WhyUs from "./components/sections/WhyUs";
+import Faq from "./components/sections/Faq";
 import InquiryForm from "./components/sections/InquiryForm";
 import Footer from "./components/sections/Footer";
 
@@ -18,6 +19,7 @@ export default function App() {
       <RaieoigusSplit />
       <Protsess />
       <WhyUs />
+      <Faq />
       <InquiryForm />
       <Footer />
     </>

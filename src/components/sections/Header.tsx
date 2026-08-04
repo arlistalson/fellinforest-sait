@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { href: "#teenused", label: "Teenused" },
   { href: "#raieoigus", label: "Raieõigus" },
   { href: "#protsess", label: "Kuidas käib" },
+  { href: "#kkk", label: "KKK" },
   { href: "#kontakt", label: "Kontakt" },
 ];
 
