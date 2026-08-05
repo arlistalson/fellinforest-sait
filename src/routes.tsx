@@ -23,12 +23,15 @@ import NotFound from "./pages/NotFound";
 
 export interface Route extends PageMeta {
   component: ComponentType;
+  /** Lehe lähtefail – prerender arvutab selle importide git-ajaloost sitemap'i lastmod'i. */
+  source: string;
 }
 
 export const ROUTES: Route[] = [
   {
     path: "/",
     component: Home,
+    source: "src/pages/Home.tsx",
     breadcrumb: "Avaleht",
     title: "Ostame metsakinnistuid ja raieõigust – Fellin Forest",
     description:
@@ -40,6 +43,7 @@ export const ROUTES: Route[] = [
   {
     path: "/metsakinnistute-ost/",
     component: Metsakinnistud,
+    source: "src/pages/Metsakinnistud.tsx",
     breadcrumb: "Metsakinnistute ost",
     title: "Metsakinnistute ost – müü mets õiglase hinnaga | Fellin Forest",
     description:
@@ -57,6 +61,7 @@ export const ROUTES: Route[] = [
   {
     path: "/raieoiguse-ost/",
     component: Raieoigus,
+    source: "src/pages/Raieoigus.tsx",
     breadcrumb: "Raieõiguse ost",
     title: "Raieõiguse ost – müü raieõigus, maa jääb sulle | Fellin Forest",
     description:
@@ -74,6 +79,7 @@ export const ROUTES: Route[] = [
   {
     path: "/pollumaa-ost/",
     component: Pollumaa,
+    source: "src/pages/Pollumaa.tsx",
     breadcrumb: "Põllumaa ost",
     title: "Põllumaa ost – ostame haritavat maad ja rohumaid | Fellin Forest",
     description:
@@ -91,6 +97,7 @@ export const ROUTES: Route[] = [
   {
     path: "/metsamajandamine/",
     component: Metsamajandamine,
+    source: "src/pages/Metsamajandamine.tsx",
     breadcrumb: "Metsamajandamine",
     title: "Metsamajandamine – hooldusraied, uuendamine, kava | Fellin Forest",
     description:
@@ -108,6 +115,7 @@ export const ROUTES: Route[] = [
   {
     path: "/hinnakujundus/",
     component: Hinnakujundus,
+    source: "src/pages/Hinnakujundus.tsx",
     breadcrumb: "Hinnakujundus ja protsess",
     title: "Metsa hind ja müügiprotsess – kuidas hind kujuneb | Fellin Forest",
     description:
@@ -119,6 +127,7 @@ export const ROUTES: Route[] = [
   {
     path: "/viljandimaa/",
     component: Piirkonnad,
+    source: "src/pages/Piirkonnad.tsx",
     breadcrumb: "Viljandimaa ja teised maakonnad",
     title: "Metsa ost Viljandimaal ja üle Eesti | Fellin Forest",
     description:
@@ -130,6 +139,7 @@ export const ROUTES: Route[] = [
   {
     path: "/kontakt/",
     component: Kontakt,
+    source: "src/pages/Kontakt.tsx",
     breadcrumb: "Kontakt",
     title: "Kontakt – Fellin Forest OÜ, Lossi tn 15, Viljandi",
     description:
@@ -143,6 +153,7 @@ export const ROUTES: Route[] = [
 export const NOT_FOUND: Route = {
   path: "/404/",
   component: NotFound,
+  source: "src/pages/NotFound.tsx",
   breadcrumb: "Lehte ei leitud",
   title: "Lehte ei leitud – Fellin Forest",
   description: "Sellist lehte ei ole. Vaata teenuseid või võta meiega ühendust.",

@@ -5,8 +5,10 @@
  * (dist/) ja `vite build --ssr` serveri bundle'i (.ssr/). Tulemus: iga lehe
  * HTML sisaldab päris teksti, pealkirju ja linke ka siis, kui JS ei tööta.
  */
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
+import { execFileSync } from "node:child_process";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -35,7 +37,72 @@ async function writePage(routePath, contents) {
   return outFile;
 }
 
-const today = new Date().toISOString().slice(0, 10);
+/**
+ * lastmod tuleb lehe päris sisu git-ajaloost, mitte build'i kuupäevast – muidu
+ * väidaks iga deploy, et kõik lehed muutusid, ja Google lakkab lastmod'i usaldamast.
+ * Ühist raami (päis, jalus, router) me ei arvesta: see ei muuda lehe sisu.
+ */
+const CHROME = new Set([
+  "src/App.tsx",
+  "src/main.tsx",
+  "src/router.tsx",
+  "src/seo.ts",
+  "src/routes.tsx",
+  "src/components/sections/Header.tsx",
+  "src/components/sections/Footer.tsx",
+]);
+
+function resolveImport(spec, fromFile) {
+  if (!spec.startsWith(".")) return null;
+  const base = resolve(dirname(fromFile), spec);
+  for (const candidate of [base, `${base}.tsx`, `${base}.ts`, join(base, "index.tsx"), join(base, "index.ts")]) {
+    if (existsSync(candidate) && statSync(candidate).isFile()) return candidate;
+  }
+  return null;
+}
+
+/** Kogub lehe lähtefaili ja kõik selle (kaudsed) kohalikud importid. */
+function collectSources(entryRelative) {
+  const seen = new Set();
+  const stack = [join(root, entryRelative)];
+  while (stack.length > 0) {
+    const file = stack.pop();
+    const rel = relative(root, file);
+    if (seen.has(rel) || CHROME.has(rel)) continue;
+    seen.add(rel);
+    for (const match of readFileSync(file, "utf8").matchAll(/from\s+["']([^"']+)["']/g)) {
+      const resolved = resolveImport(match[1], file);
+      if (resolved) stack.push(resolved);
+    }
+  }
+  return [...seen];
+}
+
+function git(args) {
+  return execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();
+}
+
+const buildDate = new Date().toISOString().slice(0, 10);
+let gitAvailable = true;
+try {
+  if (git(["rev-parse", "--is-shallow-repository"]) === "true") {
+    console.warn("  ! git-repo on shallow – lastmod jääb build'i kuupäevaks (vaja fetch-depth: 0)");
+    gitAvailable = false;
+  }
+} catch {
+  gitAvailable = false;
+}
+
+function lastModified(entryRelative) {
+  if (!gitAvailable) return buildDate;
+  try {
+    const date = git(["log", "-1", "--format=%cs", "--", ...collectSources(entryRelative)]);
+    return date || buildDate;
+  } catch {
+    return buildDate;
+  }
+}
+
 const sitemapEntries = [];
 
 for (const page of pages) {
@@ -48,7 +115,7 @@ for (const page of pages) {
       [
         "  <url>",
         `    <loc>${SITE_URL}${page.path}</loc>`,
-        `    <lastmod>${today}</lastmod>`,
+        `    <lastmod>${lastModified(page.source)}</lastmod>`,
         `    <changefreq>${page.changefreq}</changefreq>`,
         `    <priority>${page.priority}</priority>`,
         "  </url>",
