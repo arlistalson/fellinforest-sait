@@ -26,6 +26,8 @@ export function renderNotFound(): RenderResult {
 /** Prerender-skript kasutab seda nii failide kui sitemap'i genereerimiseks. */
 export const pages = ROUTES.map((route) => ({
   path: route.path,
+  title: route.title,
+  description: route.description,
   priority: route.priority ?? "0.7",
   changefreq: route.changefreq ?? "monthly",
   noindex: route.noindex ?? false,

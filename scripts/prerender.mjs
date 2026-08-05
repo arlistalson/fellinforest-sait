@@ -71,4 +71,21 @@ const sitemap = [
 await writeFile(join(distDir, "sitemap.xml"), sitemap, "utf8");
 console.log(`  ✓ sitemap.xml (${sitemapEntries.length} URL-i)`);
 
+// llms.txt – sama marsruuditabeli põhjal, et see ei jääks lehtedest maha.
+const indexable = pages.filter((page) => !page.noindex);
+const llms = [
+  "# Fellin Forest",
+  "",
+  "Fellin Forest OÜ ostab metsakinnistuid, raieõigust ja põllumaad üle Eesti.",
+  "Tasuta hindamine, konkreetne pakkumine 24 tunni jooksul, notaritasud meie kanda.",
+  "Kontor: Lossi tn 15, 71003 Viljandi. Telefon: +372 5806 5274. E-post: enrico@fellinforest.ee",
+  "",
+  "## Pages",
+  "",
+  ...indexable.map((page) => `- [${page.title}](${SITE_URL}${page.path}): ${page.description}`),
+  "",
+].join("\n");
+await writeFile(join(distDir, "llms.txt"), llms, "utf8");
+console.log(`  ✓ llms.txt (${indexable.length} lehte)`);
+
 await rm(ssrDir, { recursive: true, force: true });
