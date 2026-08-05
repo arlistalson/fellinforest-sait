@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import AnimatedSection from "../AnimatedSection";
 import { cardPop, fadeUp, staggerContainer, staggerItem } from "../../motion/variants";
+import { Link } from "../../router";
 
 const STEPS = [
   { num: 1, title: "Saada päring", desc: "Täida vorm või helista. Piisab katastritunnusest – kõik muu selgitame välja ise." },
@@ -30,6 +31,11 @@ export default function Protsess() {
             </motion.div>
           ))}
         </motion.div>
+        <p className="section-lead center-lead">
+          <Link to="/hinnakujundus/" className="card-link">
+            Vaata täpsemalt, millest hind koosneb ja kuidas protsess samm-sammult käib →
+          </Link>
+        </p>
       </div>
     </AnimatedSection>
   );

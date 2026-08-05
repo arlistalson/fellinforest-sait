@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem } from "../../motion/variants";
 import PhoneIcon from "../icons/PhoneIcon";
+import { Link } from "../../router";
+import { BUSINESS, addressLine } from "../../content/business";
 
 export default function Footer() {
   return (
-    <footer id="kontakt" className="site-footer">
+    <footer className="site-footer">
       <div className="container">
         <motion.div
           className="footer-top"
@@ -14,53 +16,49 @@ export default function Footer() {
           variants={staggerContainer}
         >
           <motion.div className="footer-col" variants={staggerItem}>
-            <h4>Menüü</h4>
-            <a href="#teenused">Teenused</a>
-            <a href="#raieoigus">Raieõigus</a>
-            <a href="#protsess">Kuidas käib</a>
-            <a href="#kkk">KKK</a>
-            <a href="#hinnaparing">Küsi pakkumist</a>
+            <h4>Teenused</h4>
+            <Link to="/metsakinnistute-ost/">Metsakinnistute ost</Link>
+            <Link to="/raieoiguse-ost/">Raieõiguse ost</Link>
+            <Link to="/pollumaa-ost/">Põllumaa ost</Link>
+            <Link to="/metsamajandamine/">Metsamajandamine</Link>
           </motion.div>
 
           <motion.div className="footer-col" variants={staggerItem}>
-            <h4>Teenused</h4>
-            <a href="#teenused">Metsakinnistute ost</a>
-            <a href="#raieoigus">Raieõiguse ost</a>
-            <a href="#teenused">Põllumaa ost</a>
-            <a href="#teenused">Metsamajandamine</a>
+            <h4>Info</h4>
+            <Link to="/hinnakujundus/">Hinnakujundus ja protsess</Link>
+            <Link to="/viljandimaa/">Viljandimaa ja teised maakonnad</Link>
+            <Link to="/kontakt/">Kontakt</Link>
+            <Link to="/kontakt/#hinnaparing">Küsi pakkumist</Link>
           </motion.div>
 
-          <motion.a
-            href="#"
-            className="footer-brand"
-            aria-label="Fellin Forest"
-            variants={staggerItem}
-          >
-            <img src="/images/logo3-white.png" alt="Fellin Forest" />
-          </motion.a>
+          <motion.div variants={staggerItem} className="footer-brand-wrap">
+            <Link to="/" className="footer-brand" aria-label="Fellin Forest – avaleht">
+              <img src="/images/logo3-white.png" alt="Fellin Forest" width="240" height="108" />
+            </Link>
+          </motion.div>
 
           <motion.div className="footer-col footer-col--right" variants={staggerItem}>
             <h4>Kontakt</h4>
-            <span className="footer-name">Enrico Orobko</span>
-            <a href="tel:+37258065274" className="footer-call">
+            <span className="footer-name">{BUSINESS.contactPerson}</span>
+            <a href={`tel:${BUSINESS.phone}`} className="footer-call">
               <PhoneIcon />
-              +372 5806 5274
+              {BUSINESS.phoneDisplay}
             </a>
-            <a href="mailto:enrico@fellinforest.ee">enrico@fellinforest.ee</a>
+            <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
           </motion.div>
 
           <motion.div className="footer-col footer-col--right" variants={staggerItem}>
             <h4>Ettevõte</h4>
-            <span>Fellin Forest OÜ</span>
-            <span>Registrikood 17117278</span>
-            <span>Lossi tn 15, 71003 Viljandi</span>
+            <span>{BUSINESS.legalName}</span>
+            <span>Registrikood {BUSINESS.regCode}</span>
+            <address className="footer-address">{addressLine}</address>
           </motion.div>
         </motion.div>
 
         <div className="footer-bottom">
           <span className="footer-brand-word">FELLIN FOREST</span>
           <p className="footer-copy-text">
-            © {new Date().getFullYear()} Fellin Forest OÜ · Registrikood 17117278 ·
+            © {new Date().getFullYear()} {BUSINESS.legalName} · Registrikood {BUSINESS.regCode} ·
             {" "}Veebilehe tegi{" "}
             <a
               href="https://talson.ee"

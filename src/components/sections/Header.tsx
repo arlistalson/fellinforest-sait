@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import Button from "../Button";
+import { Link, useRouter } from "../../router";
 
 const underlineVariants: Variants = {
   rest: { scaleX: 0 },
@@ -8,22 +9,23 @@ const underlineVariants: Variants = {
 };
 
 const NAV_LINKS = [
-  { href: "#teenused", label: "Teenused" },
-  { href: "#raieoigus", label: "Raieõigus" },
-  { href: "#protsess", label: "Kuidas käib" },
-  { href: "#kkk", label: "KKK" },
-  { href: "#kontakt", label: "Kontakt" },
+  { to: "/metsakinnistute-ost/", label: "Metsakinnistud" },
+  { to: "/raieoiguse-ost/", label: "Raieõigus" },
+  { to: "/pollumaa-ost/", label: "Põllumaa" },
+  { to: "/hinnakujundus/", label: "Hinnakujundus" },
+  { to: "/kontakt/", label: "Kontakt" },
 ];
 
-function NavLink({ href, children }: { href: string; children: string }) {
+function NavLink({ to, children, current }: { to: string; children: string; current: boolean }) {
   return (
-    <motion.a
-      href={href}
-      initial="rest"
-      whileHover="hover"
-      style={{ position: "relative", display: "inline-block", paddingBottom: 2 }}
-    >
-      {children}
+    <motion.span initial="rest" whileHover="hover" style={{ position: "relative", display: "inline-block" }}>
+      <Link
+        to={to}
+        aria-current={current ? "page" : undefined}
+        style={{ position: "relative", display: "inline-block", paddingBottom: 2 }}
+      >
+        {children}
+      </Link>
       <motion.span
         variants={underlineVariants}
         style={{
@@ -37,12 +39,13 @@ function NavLink({ href, children }: { href: string; children: string }) {
           transformOrigin: "left",
         }}
       />
-    </motion.a>
+    </motion.span>
   );
 }
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { path } = useRouter();
 
   useEffect(() => {
     if (!open) return;
@@ -53,21 +56,24 @@ export default function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // Lehe vahetumisel sulgeme mobiilimenüü.
+  useEffect(() => setOpen(false), [path]);
+
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <a href="#" className="logo">
-          <img src="/images/logo3.png" alt="Fellin Forest" className="logo-full" />
-        </a>
+        <Link to="/" className="logo" aria-label="Fellin Forest – avaleht">
+          <img src="/images/logo3.png" alt="Fellin Forest" className="logo-full" width="240" height="72" />
+        </Link>
 
         {/* Desktop nav */}
-        <nav className="nav-desktop">
+        <nav className="nav-desktop" aria-label="Peamenüü">
           {NAV_LINKS.map((l) => (
-            <NavLink key={l.href} href={l.href}>
+            <NavLink key={l.to} to={l.to} current={path === l.to}>
               {l.label}
             </NavLink>
           ))}
-          <Button href="#hinnaparing" className="nav-cta">
+          <Button href="/kontakt/#hinnaparing" className="nav-cta">
             Küsi pakkumist
           </Button>
         </nav>
@@ -89,17 +95,19 @@ export default function Header() {
         {/* Mobile dropdown */}
         <div id="mobileMenu" className={`mobile-menu${open ? " open" : ""}`}>
           {NAV_LINKS.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+            <Link key={l.to} to={l.to} onClick={() => setOpen(false)}>
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#hinnaparing"
-            className="nav-cta-mobile"
-            onClick={() => setOpen(false)}
-          >
+          <Link to="/metsamajandamine/" onClick={() => setOpen(false)}>
+            Metsamajandamine
+          </Link>
+          <Link to="/viljandimaa/" onClick={() => setOpen(false)}>
+            Piirkonnad
+          </Link>
+          <Link to="/kontakt/#hinnaparing" className="nav-cta-mobile" onClick={() => setOpen(false)}>
             Küsi pakkumist
-          </a>
+          </Link>
         </div>
       </div>
     </header>

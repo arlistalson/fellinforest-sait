@@ -1,10 +1,20 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App";
 import "./style.css";
 
-createRoot(document.getElementById("root")!).render(
+const container = document.getElementById("root")!;
+
+const app = (
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 );
+
+// Eelrenderdatud lehel hüdreerime olemasoleva märgendi, arenduses aga
+// renderdame nullist (siis on #root tühi).
+if (container.firstElementChild) {
+  hydrateRoot(container, app);
+} else {
+  createRoot(container).render(app);
+}

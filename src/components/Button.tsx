@@ -1,5 +1,6 @@
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { motion, type Variants } from "framer-motion";
+import { normalizePath, useRouter } from "../router";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -21,11 +22,31 @@ interface ButtonProps {
   icon?: ReactNode;
 }
 
+function isExternal(href: string) {
+  return /^(https?:|mailto:|tel:)/.test(href);
+}
+
 export default function Button({ href, className, children, icon }: ButtonProps) {
+  const { navigate } = useRouter();
+  const external = isExternal(href);
+
+  const hashIndex = href.indexOf("#");
+  const rawPath = hashIndex === -1 ? href : href.slice(0, hashIndex);
+  const hash = hashIndex === -1 ? "" : href.slice(hashIndex);
+  const resolved = external || !rawPath ? href : `${normalizePath(rawPath)}${hash}`;
+
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (external) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    event.preventDefault();
+    navigate(href);
+  };
+
   return (
     <motion.a
-      href={href}
+      href={resolved}
       className={className}
+      onClick={handleClick}
       initial="rest"
       whileHover="hover"
       whileTap="tap"

@@ -54,7 +54,14 @@ export default function RaieoigusSplit() {
               <motion.li key={point} variants={staggerItem}>{point}</motion.li>
             ))}
           </motion.ul>
-          <Button href="#hinnaparing" className="btn btn-solid">Küsi raieõigusele pakkumist</Button>
+          <div className="hero-actions">
+            <Button href="/raieoiguse-ost/" className="btn btn-solid">
+              Loe raieõiguse müügist
+            </Button>
+            <Button href="#hinnaparing" className="btn btn-ghost">
+              Küsi raieõigusele pakkumist
+            </Button>
+          </div>
         </motion.div>
       </div>
     </AnimatedSection>
