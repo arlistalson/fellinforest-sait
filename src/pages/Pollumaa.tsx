@@ -40,6 +40,11 @@ export default function Pollumaa() {
       </TextSection>
 
       <TextSection tint eyebrow="Hind" title="Millest põllumaa hind kujuneb?">
+        <p>
+          Põllumaa hinna määravad ennekõike mullaviljakus ehk boniteet, maatüki suurus ja kuju,
+          kuivendussüsteemi seisukord, ligipääs avalikult teelt, maa praegune kasutus või kehtiv
+          rendileping ning asukoht. Iga tükk arvutame eraldi läbi ja näitame, millest number koosneb.
+        </p>
         <InfoGrid
           cards={[
             {

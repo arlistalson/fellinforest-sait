@@ -42,6 +42,12 @@ export default function Raieoigus() {
       </TextSection>
 
       <TextSection tint eyebrow="Protsess" title="Kuidas raieõiguse müük käib?">
+        <p>
+          Raieõiguse müük käib kuues sammus: vaatame raievõimalused üle, lepime kokku raieala,
+          raieliigi, tähtaja ja hinna, vormistame notariaalse lepingu, esitame metsateatise ja
+          korraldame raie, korrastame pärast töid raiesmiku ning aitame soovi korral metsa
+          uuendada. Raha laekub sulle enne raie algust ja notaritasu tasume meie.
+        </p>
         <InfoGrid
           cards={[
             {

@@ -397,15 +397,13 @@ a { color: var(--green); }
 }
 
 .faq-q {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
   width: 100%;
   padding: 20px 22px;
-  border: none;
-  background: none;
-  font: inherit;
   font-weight: 600;
   font-size: 1.02rem;
   line-height: 1.4;
@@ -414,10 +412,21 @@ a { color: var(--green); }
   cursor: pointer;
 }
 
-.faq-q:focus-visible {
+/* Nupp katab kogu rea, aga küsimuse tekst on temast väljaspool (vt Faq.tsx) */
+.faq-toggle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.faq-toggle:focus-visible {
   outline: 2px solid var(--green-bright);
   outline-offset: -3px;
-  border-radius: var(--radius-sm);
 }
 
 .faq-plus {

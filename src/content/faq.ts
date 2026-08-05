@@ -287,7 +287,7 @@ export const FAQ_KONTAKT: QA[] = [
   {
     q: "Kas te ostate ainult Viljandimaal?",
     a: [
-      "Ei. Kontor on Viljandis, aga tehinguid teeme üle Eesti – kõigis 15 maakonnas, sealhulgas saartel.",
+      "Ei. Kontor on Viljandis, aga tehinguid teeme üle Eesti – kõigis 15 maakonnas, sealhulgas Saaremaal ja Hiiumaal. Enamiku pakkumistest teeme takseer- ja kaardiandmete põhjal, seega ei sõltu vastuse kiirus sellest, kus kinnistu asub.",
     ],
   },
 ];

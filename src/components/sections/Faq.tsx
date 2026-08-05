@@ -18,6 +18,11 @@ interface FaqProps {
 /**
  * Vastused on alati DOM-is olemas (ainult kõrgus on animeeritud), nii et
  * eelrenderdatud HTML sisaldab kogu KKK teksti ka siis, kui JS ei tööta.
+ *
+ * Küsimuse tekst ei ole tahtlikult <button>-i sees, vaid selle kõrval: teksti
+ * eraldajad (trafilatura jt, mida AI-otsingud kasutavad) viskavad <button>-i
+ * sisu ära ja siis jääb vastus küsimuseta. Nupp katab CSS-iga kogu rea, nii et
+ * klõps ja klaviatuur töötavad endiselt üle terve pealkirja.
  */
 export default function Faq({
   items,
@@ -48,16 +53,20 @@ export default function Faq({
                 variants={staggerItem}
               >
                 <h3 className="faq-q-wrap">
-                  <button
-                    type="button"
-                    className="faq-q"
-                    aria-expanded={isOpen}
-                    aria-controls={`kkk-${i}`}
-                    onClick={() => setOpen(isOpen ? null : i)}
-                  >
-                    <span>{item.q}</span>
+                  <span className="faq-q">
+                    <span className="faq-q-text" id={`kkk-q-${i}`}>
+                      {item.q}
+                    </span>
                     <span className="faq-plus" aria-hidden="true" />
-                  </button>
+                    <button
+                      type="button"
+                      className="faq-toggle"
+                      aria-expanded={isOpen}
+                      aria-controls={`kkk-${i}`}
+                      aria-labelledby={`kkk-q-${i}`}
+                      onClick={() => setOpen(isOpen ? null : i)}
+                    />
+                  </span>
                 </h3>
                 <motion.div
                   id={`kkk-${i}`}

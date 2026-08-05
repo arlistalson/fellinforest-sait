@@ -53,11 +53,14 @@ export default function Piirkonnad() {
             viewport={{ once: true, amount: 0.02 }}
             variants={fadeUp}
           >
+            {/* Tahtlikult div, mitte article: <article> paneb tekstieraldajad (mida
+                AI-otsingud kasutavad) pidama neid kaarte lehe põhisisuks ja ülejäänud
+                lehe pealkirjad – sh KKK küsimused – kaovad väljavõttest. */}
             {COUNTIES.map((county) => (
-              <article className="county-card" key={county.slug} id={county.slug}>
+              <div className="county-card" key={county.slug} id={county.slug}>
                 <h3>Metsa ost {county.inCounty}</h3>
                 <p>{county.note}</p>
-              </article>
+              </div>
             ))}
           </motion.div>
         </div>

@@ -16,6 +16,11 @@ export default function Protsess() {
       <div className="container">
         <p className="eyebrow center">Protsess</p>
         <h2>Kuidas müük käib?</h2>
+        <p className="section-lead center-lead">
+          Müük käib neljas sammus: saadad päringu katastritunnusega, meie hindame metsa tasuta,
+          seejärel saad konkreetse pakkumise 24 tunni jooksul ja sobiva hinna korral vormistame tehingu
+          notaris. Notaritasud jäävad meie kanda ja raha laekub tehingu sõlmimisel.
+        </p>
         <motion.div
           className="steps"
           initial="hidden"

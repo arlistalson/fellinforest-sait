@@ -116,7 +116,7 @@ export default function InquiryForm() {
           </div>
 
           <aside className="contact-aside">
-            <h3>Eelistad rääkida inimesega?</h3>
+            <h3>Räägi otse inimesega</h3>
             <p className="contact-aside-lead">
               Helista ja arutame sinu metsa võimalused läbi – konsultatsioon on alati tasuta.
             </p>
