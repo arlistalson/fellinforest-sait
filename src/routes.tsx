@@ -30,7 +30,7 @@ export const ROUTES: Route[] = [
     path: "/",
     component: Home,
     breadcrumb: "Avaleht",
-    title: "Fellin Forest – ostame metsakinnistuid, raieõigust ja põllumaad",
+    title: "Ostame metsakinnistuid ja raieõigust – Fellin Forest",
     description:
       "Ostame metsakinnistuid, raieõigust ja põllumaad üle Eesti. Tasuta hindamine, konkreetne pakkumine 24 tunni jooksul, notaritasud meie kanda.",
     faq: FAQ_GENERAL,
