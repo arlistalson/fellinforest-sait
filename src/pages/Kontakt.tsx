@@ -14,7 +14,7 @@ export default function Kontakt() {
         crumb="Kontakt"
         eyebrow="Kontakt"
         title="Võta ühendust"
-        lead="Helista, kirjuta või saada hinnapäring – vastame igale päringule 24 tunni jooksul. Konsultatsioon on tasuta ega kohusta sind millekski."
+        lead="Helista, kirjuta või saada hinnapäring – vastame igale päringule 24 tunni jooksul. Nõu anname tasuta ka siis, kui müük on alles kaalumisel."
       />
 
       <TextSection eyebrow="Kontaktandmed" title="Fellin Forest OÜ">

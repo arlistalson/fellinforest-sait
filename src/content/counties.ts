@@ -14,7 +14,7 @@ export const COUNTIES: County[] = [
     slug: "viljandimaa",
     name: "Viljandimaa",
     inCounty: "Viljandimaal",
-    note: "Meie kodumaakond – kontor asub Viljandis Lossi tänaval. Siin tunneme piirkonna metsad, teedevõrgu ja kohalikud kokkuostuhinnad kõige paremini ning jõuame kinnistut vaatama tavaliselt juba paari päevaga.",
+    note: "Meie kodumaakond. Ostame nii Sakala kõrgustiku viljakamaid kuusikuid ja männikuid kui ka Võrtsjärve-äärseid madalamaid ja märgemaid alasid, kus kokkuvedu sõltub rohkem aastaajast.",
   },
   {
     slug: "tartumaa",

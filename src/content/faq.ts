@@ -97,7 +97,7 @@ export const FAQ_METSAKINNISTU: QA[] = [
   {
     q: "Mis saab kinnistul olevast hüpoteegist või servituudist?",
     a: [
-      "Hüpoteek kustutatakse tehingu käigus: ostuhinnast tasutakse pangale laenujääk ja vahe laekub sulle. Suhtluse pangaga korraldame meie.",
+      "Hüpoteeki ei pea sa enne müüki ise korda ajama – see kustutatakse tehingu käigus. Pank saab oma osa otse ostuhinnast ja ülejäänu kantakse sulle.",
       "Servituut (nt juurdepääsutee või tehnovõrk) jääb üldjuhul kehtima ja seda arvestame hinnas. Ütleme alati välja, kui palju mingi kitsendus hinda mõjutab.",
     ],
   },
@@ -124,16 +124,10 @@ export const FAQ_METSAKINNISTU: QA[] = [
 
 export const FAQ_RAIEOIGUS: QA[] = [
   {
-    q: "Mis on raieõiguse müük?",
-    a: [
-      "Raieõiguse müügil müüd ainult õiguse kokkulepitud alal ja kokkulepitud ajal metsa raiuda. Maa ise jääb sinu omandisse ja pärast raiet saad selle uue metsaga uuendada, ise kasutada või hiljem müüa.",
-    ],
-  },
-  {
     q: "Millal on raieõiguse müük kasulikum kui kinnistu müük?",
     a: [
       "Siis, kui tahad metsast tulu saada, aga maad ei soovi käest anda – näiteks kui kinnistu on sugulastelt päritud, kodu kõrval või pikaajaline investeering.",
-      "Kui su eesmärk on kogu vara korraga rahaks teha, on kinnistu müük tavaliselt lihtsam. Arvutame soovi korral mõlemad variandid läbi ja näitame numbrid kõrvuti.",
+      "Kui su eesmärk on kogu vara korraga rahaks teha, on kinnistu müük tavaliselt lihtsam. Kahtluse korral tasub lasta mõlemad summad välja arvutada ja alles siis otsustada.",
     ],
   },
   {
@@ -151,20 +145,20 @@ export const FAQ_RAIEOIGUS: QA[] = [
   {
     q: "Mis seisus mets pärast raiet jääb?",
     a: [
-      "Pärast tööde lõppu korrastame raiesmiku: koristame raiejäätmed ja tasandame kokkuveoteed, nii et ala jääb uuendamiseks valmis.",
-      "Soovi korral aitame ka maapinna ettevalmistuse, istutamise ja kultuuri hooldusega – nii on uus metsapõlv kohe õigel järjel.",
+      "Ala jääb korrastatuna – raiejäätmed saavad koristatud ja masinateed tasandatud, nii et uuendamisega saab kohe edasi minna.",
+      "Soovi korral võtame enda peale ka uue metsapõlve rajamise, nii et sa ei pea selleks eraldi tegijat otsima.",
     ],
   },
   {
     q: "Kas leping vormistatakse notaris?",
     a: [
-      "Jah. Lepingusse kirjutatakse selgelt sisse raieala, raieliik, tähtaeg ja hind, nii et hilisemaid vaidlusi ei teki. Notaritasu tasume meie.",
+      "Jah, alati. Notaritasu tasume meie ja kõik kokkulepped saavad kirja, nii et hiljem ei teki eriarvamust selles, mida ja kus tohib raiuda.",
     ],
   },
   {
     q: "Kui pikk on raieõiguse tähtaeg?",
     a: [
-      "Tähtaeg lepitakse kokku lepingus, tavaliselt on see üks kuni kaks aastat. Nii jääb ruumi valida sobiv aastaaeg – näiteks pehme pinnasega alad raiutakse külmunud maa ajal, et ala vähem kannataks.",
+      "Tähtaeg lepitakse kokku lepingus, tavaliselt üks kuni kaks aastat. Varu on vajalik selleks, et töid saaks teha pinnasele kõige sobivamal ajal.",
     ],
   },
 ];
@@ -173,19 +167,19 @@ export const FAQ_POLLUMAA: QA[] = [
   {
     q: "Millist põllumaad te ostate?",
     a: [
-      "Ostame haritavat põllumaad, rohumaid, kasutusest väljas olevaid ja võsastunud maatükke ning maatulundusmaad, kus põllu kõrval on ka metsaosa.",
+      "Ostame haritavat põllumaad, rohumaid, kasutusest väljas olevaid ja võsastunud maatükke ning maatulundusmaad, millel leidub ka metsaosa.",
     ],
   },
   {
     q: "Mul on maa rendile antud – kas saan ikka müüa?",
     a: [
-      "Jah. Kehtiv rendileping jääb müügi järel kehtima ja rentnik saab tööd rahulikult jätkata – müük ei katkesta lepingut. Palun anna päringus teada rendilepingu tähtaeg ja tingimused, siis arvestame need pakkumisse.",
+      "Jah. Müük ei katkesta rendilepingut – see läheb uue omanikuga edasi samadel tingimustel. Anna päringus teada lepingu tähtaeg, siis arvestame selle kohe pakkumisse.",
     ],
   },
   {
     q: "Millest sõltub põllumaa hind?",
     a: [
-      "Kõige rohkem mullaviljakusest ehk boniteedist. Lisaks loevad maatüki suurus ja kuju (suur ühtlane põld on masinatega odavam harida), kuivendussüsteemi seisukord, ligipääs teelt ning see, kas maa on praegu kasutuses või sööti jäänud.",
+      "Kõige rohkem mullaviljakusest ehk boniteedist – see määrab saagikuse ja seega maa väärtuse. Järgmisena loevad põllu kuju, kuivenduse korrasolek ja juurdepääs, sest need määravad, kui odav on maad masinatega harida.",
     ],
   },
   {
@@ -237,7 +231,7 @@ export const FAQ_HINNAKUJUNDUS: QA[] = [
   {
     q: "Kas pean pakkumise kohe vastu võtma?",
     a: [
-      "Ei. Pakkumine ei kohusta sind millekski ja soovitame seda alati teiste omaga võrrelda. Hea ostja ei pea sind kiirustama.",
+      "Ei. Võta rahulikult aega ja küsi paralleelselt ka teistelt ostjatelt – see on sinu õigus ja meie jaoks täiesti tavaline.",
     ],
   },
 ];
@@ -252,14 +246,14 @@ export const FAQ_METSAMAJANDAMINE: QA[] = [
   {
     q: "Millal teha valgustus- ja millal harvendusraie?",
     a: [
-      "Valgustusraie tehakse noorendikus, et anda parematele puudele valgust ja kasvuruumi. Harvendusraie tuleb keskealises metsas, kui puud hakkavad üksteist kitsendama.",
-      "Õigeaegne hooldus tõstab tulevase uuendusraie väärtust märgatavalt ja hoiab metsa tervena – hilinenud hooldus seda enam tagasi ei too.",
+      "Valgustusraie käib noorendikus, kus tuleb parematele puudele ruumi teha. Harvendusraie aeg on käes siis, kui võrad hakkavad kokku puutuma ja juurdekasv aeglustub.",
+      "Mõlemal on kitsas ajaaken: hilinenud hooldust ei saa tagantjärele tasa teha, sest kaotatud juurdekasvu mets tagasi ei anna.",
     ],
   },
   {
     q: "Kas aitate ka istutamise ja kultuuri hooldusega?",
     a: [
-      "Jah. Valmistame maapinna ette, tellime kvaliteetsed taimed ja istutame, hiljem hooldame kultuuri – rohime, teeme ulukikahjustuste tõrjet ja käime seisu üle vaatamas.",
+      "Jah, teeme kogu ahela: maapinna ettevalmistuse, taimede tellimise, istutuse ja hilisema hoolduse. Noore kultuuri juurde käime tagasi seni, kuni mets on omal jalal.",
     ],
   },
   {
@@ -274,7 +268,7 @@ export const FAQ_KONTAKT: QA[] = [
   {
     q: "Kui kiiresti te päringule vastate?",
     a: [
-      "Vastame igale päringule 24 tunni jooksul, tööpäevadel enamasti mõne tunniga. Kui sul on kiire, helista otse – nii saab enamiku küsimusi kohe selgeks rääkida.",
+      "Hiljemalt ööpäevaga, tööpäevadel enamasti mõne tunniga. Kui sul on kiire, helista otse – nii saab enamiku küsimusi kohe selgeks rääkida.",
     ],
   },
   {
@@ -293,7 +287,7 @@ export const FAQ_KONTAKT: QA[] = [
   {
     q: "Kas te ostate ainult Viljandimaal?",
     a: [
-      "Ei. Meie kontor on Viljandis, kuid ostame metsakinnistuid, raieõigust ja põllumaad kõigis Eesti maakondades, sealhulgas saartel.",
+      "Ei. Kontor on Viljandis, aga tehinguid teeme üle Eesti – kõigis 15 maakonnas, sealhulgas saartel.",
     ],
   },
 ];
@@ -302,13 +296,13 @@ export const FAQ_MAAKONNAD: QA[] = [
   {
     q: "Kas ostate metsa üle kogu Eesti?",
     a: [
-      "Jah, ostame metsakinnistuid, raieõigust ja põllumaad kõigis 15 maakonnas, sealhulgas Saaremaal ja Hiiumaal. Kontor asub Viljandis, kuid tehingud teeme üle Eesti.",
+      "Jah, kõigis 15 maakonnas – ka Saaremaal ja Hiiumaal. Ainus, mis asukohast sõltub, on see, kui kiiresti jõuame soovi korral kohapeale.",
     ],
   },
   {
     q: "Kas kaugemal asuva kinnistu eest saab vähem?",
     a: [
-      "Asukoht mõjutab hinda eelkõige logistika kaudu – kaugus kokkuostukohast ja teede seisukord määravad transpordikulu. Saartel lisandub praamikulu. Suurema kinnistu puhul on selle mõju hektari kohta väiksem.",
+      "Ei – asukoha enda eest me hinda ei vähenda. Vahe tekib ainult veokuludest ja need näitame pakkumises eraldi real välja.",
     ],
   },
   {

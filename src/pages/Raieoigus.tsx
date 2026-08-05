@@ -72,16 +72,15 @@ export default function Raieoigus() {
         />
       </TextSection>
 
-      <TextSection eyebrow="Hind ja tähtaeg" title="Millest raieõiguse hind sõltub?">
+      <TextSection eyebrow="Hind" title="Millest raieõiguse hind sõltub?">
         <p>
           Raieõiguse hinna aluseks on eeldatav raietulu: raiutav tagavara tihumeetrites, puuliikide
           ja sortimentide jaotus ning kehtivad puiduhinnad. Sellest lahutatakse raie-, kokkuveo- ja
           transpordikulud, mis sõltuvad ligipääsust, pinnase kandvusest ja kaugusest.
         </p>
         <p>
-          Tähtaeg lepitakse kokku lepingus, tavaliselt üks kuni kaks aastat. See annab ruumi valida
-          sobiv aastaaeg – näiteks pehme pinnasega alad raiutakse külmunud maa ajal, et ala vähem
-          kannataks. Täpsem ülevaade on{" "}
+          Näitame pakkumises need osad eraldi välja, et sa näeksid, kust number tuleb. Sama
+          arvutuskäigu oleme lahti kirjutanud{" "}
           <Link to="/hinnakujundus/">hinnakujunduse lehel</Link>.
         </p>
       </TextSection>

@@ -11,8 +11,6 @@ import { FAQ_MAAKONNAD } from "../content/faq";
 import { BUSINESS, addressLine } from "../content/business";
 import { Link } from "../router";
 
-const [viljandimaa, ...others] = COUNTIES;
-
 export default function Piirkonnad() {
   return (
     <>
@@ -32,8 +30,9 @@ export default function Piirkonnad() {
           millised teed suuremat masinat kannavad.
         </p>
         <p>
-          {viljandimaa.note} Sama kiiresti tegutseme naabermaakondades – Tartumaal, Pärnumaal,
-          Järvamaal, Jõgevamaal ja Valgamaal.
+          Sama kiiresti tegutseme naabermaakondades – Tartumaal, Pärnumaal, Järvamaal, Jõgevamaal
+          ja Valgamaal. Kui soovid asju näost näkku arutada, lepi aeg kokku ja tule kontorisse:
+          Viljandis oleme kohapeal ka siis, kui kinnistu ise jääb hoopis teise maakonda.
         </p>
       </TextSection>
 
@@ -54,7 +53,7 @@ export default function Piirkonnad() {
             viewport={{ once: true, amount: 0.02 }}
             variants={fadeUp}
           >
-            {[viljandimaa, ...others].map((county) => (
+            {COUNTIES.map((county) => (
               <article className="county-card" key={county.slug} id={county.slug}>
                 <h3>Metsa ost {county.inCounty}</h3>
                 <p>{county.note}</p>
@@ -66,9 +65,8 @@ export default function Piirkonnad() {
 
       <TextSection eyebrow="Kohalolek" title="Kaugem kinnistu ei tähenda halvemat pakkumist">
         <p>
-          Küsimus, mille metsaomanikud kõige sagedamini esitavad, on see, kas kaugemal asuva
-          kinnistu eest saab vähem. Otseselt asukoha eest me hinda ei vähenda – mõju tuleb
-          logistikast. Kui kokkuvedu on pikk või teed nõrgad, kasvab raiekulu ja see kajastub
+          Metsaomanikud küsivad seda peaaegu alati. Otseselt asukoha eest me hinda ei vähenda –
+          mõju tuleb logistikast. Kui kokkuvedu on pikk või teed nõrgad, kasvab raiekulu ja see kajastub
           pakkumises. Suurema kinnistu puhul jaguneb see kulu suuremale mahule ja mõju hektari
           kohta on väiksem.
         </p>
