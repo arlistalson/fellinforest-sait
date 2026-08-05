@@ -45,7 +45,7 @@ export const ROUTES: Route[] = [
     component: Metsakinnistud,
     source: "src/pages/Metsakinnistud.tsx",
     breadcrumb: "Metsakinnistute ost",
-    title: "Metsakinnistute ost – müü mets õiglase hinnaga | Fellin Forest",
+    title: "Metsakinnistute ost üle Eesti – Fellin Forest",
     description:
       "Ostame metsakinnistuid üle Eesti – ka läbiraiutud, hüpoteegiga ja kaasomandis kinnistuid. Päringuks piisab katastritunnusest, pakkumine 24 tunniga.",
     faq: FAQ_METSAKINNISTU,
@@ -63,7 +63,7 @@ export const ROUTES: Route[] = [
     component: Raieoigus,
     source: "src/pages/Raieoigus.tsx",
     breadcrumb: "Raieõiguse ost",
-    title: "Raieõiguse ost – müü raieõigus, maa jääb sulle | Fellin Forest",
+    title: "Raieõiguse ost, maa jääb sulle – Fellin Forest",
     description:
       "Ostame raieõigust üle Eesti. Maa jääb sinu omandisse, raha laekub enne raie algust ja pärast töid jääb korrastatud raiesmik. Küsi tasuta pakkumist.",
     faq: FAQ_RAIEOIGUS,
@@ -81,7 +81,7 @@ export const ROUTES: Route[] = [
     component: Pollumaa,
     source: "src/pages/Pollumaa.tsx",
     breadcrumb: "Põllumaa ost",
-    title: "Põllumaa ost – ostame haritavat maad ja rohumaid | Fellin Forest",
+    title: "Põllumaa ost üle Eesti – Fellin Forest",
     description:
       "Ostame põllumaad, rohumaid ja sööti jäänud maatükke üle Eesti. Ka rendile antud maa – leping jääb kehtima. Tasuta hindamine, pakkumine 24 tunniga.",
     faq: FAQ_POLLUMAA,
@@ -99,7 +99,7 @@ export const ROUTES: Route[] = [
     component: Metsamajandamine,
     source: "src/pages/Metsamajandamine.tsx",
     breadcrumb: "Metsamajandamine",
-    title: "Metsamajandamine – hooldusraied, uuendamine, kava | Fellin Forest",
+    title: "Metsamajandamine ja hooldusraied – Fellin Forest",
     description:
       "Metsamajandamiskava, valgustus- ja harvendusraie, maapinna ettevalmistus, istutus ja kultuuri hooldus. Aitame ka metsateatiste ja toetustega.",
     faq: FAQ_METSAMAJANDAMINE,
@@ -117,7 +117,7 @@ export const ROUTES: Route[] = [
     component: Hinnakujundus,
     source: "src/pages/Hinnakujundus.tsx",
     breadcrumb: "Hinnakujundus ja protsess",
-    title: "Metsa hind ja müügiprotsess – kuidas hind kujuneb | Fellin Forest",
+    title: "Metsa hind ja müügiprotsess – Fellin Forest",
     description:
       "Millest metsakinnistu hind koosneb ja kuidas tehing samm-sammult käib – päringust notarini. Tasuta hindamine, notaritasud meie kanda.",
     faq: FAQ_HINNAKUJUNDUS,
@@ -129,7 +129,7 @@ export const ROUTES: Route[] = [
     component: Piirkonnad,
     source: "src/pages/Piirkonnad.tsx",
     breadcrumb: "Viljandimaa ja teised maakonnad",
-    title: "Metsa ost Viljandimaal ja üle Eesti | Fellin Forest",
+    title: "Metsa ost Viljandimaal ja üle Eesti – Fellin Forest",
     description:
       "Fellin Forest OÜ kontor on Viljandis, Lossi tn 15. Ostame metsakinnistuid, raieõigust ja põllumaad kõigis 15 maakonnas – ka Saaremaal ja Hiiumaal.",
     faq: FAQ_MAAKONNAD,
