@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { jsPDF } from "jspdf";
 import { fetchParcels, fetchRows, parseInput, renderMap, type Parcel, type Row } from "./data";
-import { buildPdf, num, type OfferType } from "./pdf";
+import { buildPdf, eur, num, type OfferType } from "./pdf";
 
 // Repo on avalik → paroolidest on siin ainult PBKDF2 räsi (räsitakse "kasutaja:parool", sool UTF-8 stringina).
 // shortcut: kontroll on brauseris (staatiline sait); kaitseb tööriista, mitte andmeid – need on niikuinii avalikud.
@@ -158,6 +158,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
   const [nr, setNr] = useState(today);
   const [saaja, setSaaja] = useState("");
   const [hind, setHind] = useState("");
+  const [hinnad, setHinnad] = useState<Record<string, string>>({});
   const [email, setEmail] = useState({ to: "", subject: "", body: "" });
   const [pdfUrl, setPdfUrl] = useState("");
   const [logo, setLogo] = useState<{ src: string; ratio: number } | null>(null);
@@ -197,7 +198,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
   useEffect(() => {
     if (!logo || !parcels.length) return;
     const t = setTimeout(() => {
-      const doc = buildPdf({ ...tpl, tyyp, nr, saaja, hind, parcels, maps, rows }, logo.src, logo.ratio);
+      const doc = buildPdf({ ...tpl, tyyp, nr, saaja, hind, hinnad, parcels, maps, rows }, logo.src, logo.ratio);
       docRef.current = doc;
       const url = URL.createObjectURL(doc.output("blob"));
       setPdfUrl((old) => {
@@ -206,7 +207,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
       });
     }, 400);
     return () => clearTimeout(t);
-  }, [logo, tpl, tyyp, nr, saaja, hind, parcels, maps, rows]);
+  }, [logo, tpl, tyyp, nr, saaja, hind, hinnad, parcels, maps, rows]);
 
   async function search(e: FormEvent) {
     e.preventDefault();
@@ -408,10 +409,31 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
               </div>
               </>
               )}
-              <label>
-                {tyyp === "raie" ? "Hind kokku (EUR)" : "Pakutav ostuhind (EUR)"}
-                <input inputMode="decimal" value={hind} onChange={(e) => setHind(e.target.value)} placeholder="nt 8500" />
-              </label>
+              {tyyp === "raie" ? (
+                <label>
+                  Hind kokku (EUR)
+                  <input inputMode="decimal" value={hind} onChange={(e) => setHind(e.target.value)} placeholder="nt 8500" />
+                </label>
+              ) : (
+                <>
+                  {parcels.map((p) => (
+                    <label key={p.tunnus}>
+                      {p.tunnus} {p.l_aadress} – pakutav hind (EUR)
+                      <input
+                        inputMode="decimal"
+                        value={hinnad[p.tunnus] ?? ""}
+                        onChange={(e) => setHinnad((h) => ({ ...h, [p.tunnus]: e.target.value }))}
+                        placeholder="nt 45000"
+                      />
+                    </label>
+                  ))}
+                  {parcels.length > 1 && (
+                    <p>
+                      <b>Kokku: {eur(parcels.reduce((a, p) => a + num(hinnad[p.tunnus] ?? ""), 0))}</b>
+                    </p>
+                  )}
+                </>
+              )}
             </section>
 
             <section>

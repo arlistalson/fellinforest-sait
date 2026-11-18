@@ -11,7 +11,8 @@ export type Offer = {
   kontakt: string;
   sissejuhatus: string;
   pealkiri: string;
-  hind: string;
+  hind: string; // raiepakkumise koguhind
+  hinnad: Record<string, string>; // kinnistu ostupakkumine: hind katastritunnuse kaupa
   tingimused: string;
   jalus: string; // "vasak | keskmine | parem"
   parcels: Parcel[];
@@ -28,6 +29,8 @@ const BOTTOM = PAGE_H - 24; // jaluse kohal
 const ha = (m2: number | null) => (m2 ? `${(m2 / 10000).toFixed(2)} ha` : "-");
 export const num = (s: string) => Number(s.replace(",", ".")) || 0;
 const fmt = (n: number, d: number) => String(Math.round(n * 10 ** d) / 10 ** d);
+// "120000" → "120 000 EUR" (tavaline tühik – WinAnsi fondis on see kindlalt olemas)
+export const eur = (n: number) => `${fmt(n, 2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} EUR`;
 
 export function buildPdf(o: Offer, logo: string, logoRatio: number): jsPDF {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
@@ -87,8 +90,6 @@ export function buildPdf(o: Offer, logo: string, logoRatio: number): jsPDF {
   const imgW = PAGE_W - M - imgX;
   const imgH = imgW * 0.75;
   for (const p of o.parcels) {
-    ensure(imgH + 4);
-    const top = y;
     const facts: [string, string][] = [
       ["Maakond:", p.mk_nimi],
       ["Omavalitsus:", p.ov_nimi],
@@ -103,20 +104,27 @@ export function buildPdf(o: Offer, logo: string, logoRatio: number): jsPDF {
       ["Muu maa:", ha(p.muumaa)],
     ];
     if (p.kinnistu) facts.splice(4, 0, ["Kinnistu nr:", p.kinnistu]);
+    const price = o.tyyp === "kinnistu" ? num(o.hinnad[p.tunnus] ?? "") : 0;
+    if (price) facts.push(["Pakutav hind:", eur(price)]);
+    const blockH = Math.max(imgH, 12 + facts.length * 5.2);
+    ensure(blockH + 4);
+    const top = y;
     doc.setFont("helvetica", "bold").setFontSize(13).text("Kinnistu kirjeldus:", M, top + 5);
     facts.forEach(([k, v], i) => {
       const ly = top + 12 + i * 5.2;
       doc.setFont("helvetica", "bold").setFontSize(10.5).text(k, M, ly);
-      doc.setFont("helvetica", "normal").text(doc.splitTextToSize(v, imgX - M - 34)[0], M + 30, ly);
+      doc.setFont("helvetica", k === "Pakutav hind:" ? "bold" : "normal").text(doc.splitTextToSize(v, imgX - M - 34)[0], M + 30, ly);
     });
     if (o.maps[p.tunnus]) doc.addImage(o.maps[p.tunnus], "JPEG", imgX, top, imgW, imgH);
-    y = top + Math.max(imgH, 12 + facts.length * 5.2) + 6;
+    y = top + blockH + 6;
   }
 
   if (o.tyyp === "kinnistu") {
-    if (o.hind.trim()) {
+    const total = o.parcels.reduce((a, p) => a + num(o.hinnad[p.tunnus] ?? ""), 0);
+    if (total) {
       ensure(14);
-      doc.setFont("helvetica", "bold").setFontSize(13).text(`Pakutav ostuhind: ${o.hind.trim()} EUR`, M, y + 4);
+      const label = o.parcels.length > 1 ? "Pakutav ostuhind kokku" : "Pakutav ostuhind";
+      doc.setFont("helvetica", "bold").setFontSize(13).text(`${label}: ${eur(total)}`, M, y + 4);
       y += 16;
     }
   } else {
