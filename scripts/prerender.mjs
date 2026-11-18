@@ -145,7 +145,7 @@ const llms = [
   "",
   "Fellin Forest OÜ ostab metsakinnistuid, raieõigust ja põllumaad üle Eesti.",
   "Tasuta hindamine, konkreetne pakkumine 24 tunni jooksul, notaritasud meie kanda.",
-  "Kontor: Lossi tn 15, 71003 Viljandi. Telefon: +372 5806 5274. E-post: enrico@fellinforest.ee",
+  "Kontor: Lossi tn 15, 71003 Viljandi. Telefon: +372 5340 2340. E-post: enrico@fellinforest.ee",
   "",
   "## Pages",
   "",

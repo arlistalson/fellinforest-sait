@@ -143,7 +143,7 @@ export const ROUTES: Route[] = [
     breadcrumb: "Kontakt",
     title: "Kontakt – Fellin Forest OÜ, Lossi tn 15, Viljandi",
     description:
-      "Helista +372 5806 5274 või kirjuta enrico@fellinforest.ee. Fellin Forest OÜ, Lossi tn 15, 71003 Viljandi. Vastame igale päringule 24 tunni jooksul.",
+      "Helista +372 5340 2340 või kirjuta enrico@fellinforest.ee. Fellin Forest OÜ, Lossi tn 15, 71003 Viljandi. Vastame igale päringule 24 tunni jooksul.",
     faq: FAQ_KONTAKT,
     priority: "0.9",
     changefreq: "yearly",

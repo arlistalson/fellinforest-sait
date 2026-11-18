@@ -1,7 +1,10 @@
 import { jsPDF } from "jspdf";
 import type { Parcel, Row } from "./data";
 
+export type OfferType = "raie" | "kinnistu";
+
 export type Offer = {
+  tyyp: OfferType;
   nr: string;
   saaja: string;
   pakkuja: string;
@@ -110,35 +113,42 @@ export function buildPdf(o: Offer, logo: string, logoRatio: number): jsPDF {
     y = top + Math.max(imgH, 12 + facts.length * 5.2) + 6;
   }
 
-  // Raietabel
-  const cols = [M + 2, M + 38, M + 54, M + 74, M + 100, M + 148];
-  const heads = ["Katastritunnus", "Eraldis", "Raieliik", "Pindala (ha)", "Hinnanguline maht (tm)", "Hind"];
-  const head = () => {
-    doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(60);
-    heads.forEach((h, i) => doc.text(h, cols[i], y));
-    doc.setTextColor(0);
-    y += 3;
-  };
-  ensure(20);
-  head();
-  doc.setDrawColor(0).setLineWidth(0.6);
-  doc.line(M, y, PAGE_W - M, y);
-  let prevTunnus = "";
-  for (const r of o.rows) {
-    if (y + 7 > BOTTOM) {
-      doc.line(M, y, PAGE_W - M, y);
-      doc.addPage();
-      y = M + 4;
-      head();
-      doc.line(M, y, PAGE_W - M, y);
-      prevTunnus = "";
+  if (o.tyyp === "kinnistu") {
+    if (o.hind.trim()) {
+      ensure(14);
+      doc.setFont("helvetica", "bold").setFontSize(13).text(`Pakutav ostuhind: ${o.hind.trim()} EUR`, M, y + 4);
+      y += 16;
     }
-    doc.setFontSize(10.5);
-    if (r.tunnus !== prevTunnus) doc.text(r.tunnus, cols[0], y + 5);
-    prevTunnus = r.tunnus;
-    [r.eraldis, r.raieliik, r.pindala, r.maht].forEach((v, i) => doc.text(v, cols[i + 1], y + 5));
-    y += 7;
-    doc.setLineWidth(0.15).line(cols[1] - 2, y, PAGE_W - M, y).setLineWidth(0.6);
+  } else {
+    // Raietabel
+    const cols = [M + 2, M + 38, M + 54, M + 74, M + 100, M + 148];
+    const heads = ["Katastritunnus", "Eraldis", "Raieliik", "Pindala (ha)", "Hinnanguline maht (tm)", "Hind"];
+    const head = () => {
+      doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(60);
+      heads.forEach((h, i) => doc.text(h, cols[i], y));
+      doc.setTextColor(0);
+      y += 3;
+    };
+    ensure(20);
+    head();
+    doc.setDrawColor(0).setLineWidth(0.6);
+    doc.line(M, y, PAGE_W - M, y);
+    let prevTunnus = "";
+    for (const r of o.rows) {
+      if (y + 7 > BOTTOM) {
+        doc.line(M, y, PAGE_W - M, y);
+        doc.addPage();
+        y = M + 4;
+        head();
+        doc.line(M, y, PAGE_W - M, y);
+        prevTunnus = "";
+      }
+      doc.setFontSize(10.5);
+      if (r.tunnus !== prevTunnus) doc.text(r.tunnus, cols[0], y + 5);
+      prevTunnus = r.tunnus;
+      [r.eraldis, r.raieliik, r.pindala, r.maht].forEach((v, i) => doc.text(v, cols[i + 1], y + 5));
+      y += 7;
+      doc.setLineWidth(0.15).line(cols[1] - 2, y, PAGE_W - M, y).setLineWidth(0.6);
   }
   doc.line(M, y, PAGE_W - M, y);
 
@@ -151,6 +161,7 @@ export function buildPdf(o: Offer, logo: string, logoRatio: number): jsPDF {
   doc.text(`${fmt(totalTm, 0)} tm`, cols[4], y);
   if (o.hind.trim()) doc.text(`${o.hind.trim()} EUR`, cols[5], y);
   y += 12;
+  }
 
   if (o.tingimused.trim()) para(o.tingimused);
 

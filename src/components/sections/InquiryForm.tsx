@@ -127,9 +127,9 @@ export default function InquiryForm() {
               <p className="person-brand">Fellin Forest</p>
               <p className="person-name">Enrico Orobko</p>
               <p className="person-role">Metsa ost ja pakkumised</p>
-              <a href="tel:+37258065274" className="person-call">
+              <a href="tel:+37253402340" className="person-call">
                 <PhoneIcon />
-                +372 5806 5274
+                +372 5340 2340
               </a>
               <a href="mailto:enrico@fellinforest.ee" className="person-line">
                 enrico@fellinforest.ee

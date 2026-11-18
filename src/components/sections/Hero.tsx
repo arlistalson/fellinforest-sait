@@ -21,8 +21,8 @@ export default function Hero() {
           </p>
           <div className="hero-actions">
             <Button href="#hinnaparing" className="btn btn-solid">Küsi tasuta pakkumist</Button>
-            <Button href="tel:+37258065274" className="btn btn-glass" icon={<PhoneIcon />}>
-              Helista: 5806 5274
+            <Button href="tel:+37253402340" className="btn btn-glass" icon={<PhoneIcon />}>
+              Helista: 5340 2340
             </Button>
           </div>
         </motion.div>

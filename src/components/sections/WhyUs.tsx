@@ -38,7 +38,7 @@ export default function WhyUs() {
           </motion.div>
           <div className="hero-actions">
             <Button href="#hinnaparing" className="btn btn-solid">Küsi pakkumist</Button>
-            <Button href="tel:+37258065274" className="btn btn-ghost" icon={<PhoneIcon />}>
+            <Button href="tel:+37253402340" className="btn btn-ghost" icon={<PhoneIcon />}>
               Helista meile
             </Button>
           </div>

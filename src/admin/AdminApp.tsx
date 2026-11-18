@@ -1,23 +1,40 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { jsPDF } from "jspdf";
 import { fetchParcels, fetchRows, parseInput, renderMap, type Parcel, type Row } from "./data";
-import { buildPdf, num } from "./pdf";
+import { buildPdf, num, type OfferType } from "./pdf";
 
-// Repo on avalik → paroolist on siin ainult PBKDF2 räsi.
+// Repo on avalik → paroolidest on siin ainult PBKDF2 räsi (räsitakse "kasutaja:parool", sool UTF-8 stringina).
 // shortcut: kontroll on brauseris (staatiline sait); kaitseb tööriista, mitte andmeid – need on niikuinii avalikud.
 // Kui lisandub serveripoolne meilisaatmine, peab sama kontroll toimuma serveris.
-const SALT = "7e2e9aca325c99926744d8b07bc0e655";
-const HASH = "abc0942cb531596d425ad17328fded067910655581d0ec927bc9bac2f3e05265";
+// Uus konto: node -e 'c=require("crypto");s=c.randomBytes(16).toString("hex");console.log(s,c.pbkdf2Sync("nimi:parool",s,600000,32,"sha256").toString("hex"))'
+const ACCOUNTS: Record<string, { salt: string; hash: string; kontakt: string; jalus: string }> = {
+  generiks: {
+    salt: "7e2e9aca325c99926744d8b07bc0e655",
+    hash: "abc0942cb531596d425ad17328fded067910655581d0ec927bc9bac2f3e05265",
+    kontakt: "Enrico Orobko, enrico@fellinforest.ee\nTelefon: +372 5340 2340",
+    jalus: "Fellin Forest OÜ | Tel. +372 5340 2340 | enrico@fellinforest.ee",
+  },
+  kristina: {
+    salt: "3eb46780395e47f683b36246fae2d8ca",
+    hash: "4794a8c04255a3fd705a7f88fd7d7d7e64e5fed8483e3f3121648461fe46aa4d",
+    kontakt: "Kristina Aasma, kristina@fellinforest.ee\nTelefon: +372 5561 9360",
+    jalus: "Fellin Forest OÜ | Tel. +372 5561 9360 | kristina@fellinforest.ee",
+  },
+};
 const AUTH_KEY = "ff-admin";
-const TEMPLATE_KEY = "ff-admin-template";
 
 async function checkLogin(user: string, pass: string): Promise<boolean> {
+  const acc = ACCOUNTS[user];
+  if (!acc) return false;
   const enc = new TextEncoder();
   const key = await crypto.subtle.importKey("raw", enc.encode(`${user}:${pass}`), "PBKDF2", false, ["deriveBits"]);
-  const salt = enc.encode(SALT);
-  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt, iterations: 600000 }, key, 256);
+  const bits = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", hash: "SHA-256", salt: enc.encode(acc.salt), iterations: 600000 },
+    key,
+    256,
+  );
   const hex = [...new Uint8Array(bits)].map((b) => b.toString(16).padStart(2, "0")).join("");
-  return hex === HASH;
+  return hex === acc.hash;
 }
 
 const store = {
@@ -37,23 +54,41 @@ const store = {
   },
 };
 
-const DEFAULT_TEMPLATE = {
-  pakkuja: "Fellin Forest OÜ\nReg. kood 17117278",
-  kontakt: "Enrico Orobko, enrico@fellinforest.ee\nTelefon: +372 5806 5274",
-  sissejuhatus:
-    "Edastame Teile meie ettevõtte poolt koostatud hinnapakkumise allpool kirjeldatud kinnistu raiele. Teiepoolsed küsimused ja ettepanekud on igati oodatud.",
-  pealkiri: "KAVANDATAV RAIE",
-  tingimused:
-    "Hinnapakkumise koostamisel arvestasime eelkõige Eestis kehtivaid metsaseadusi ning ekspertide poolt koostatud metsamajanduskava.\nRaiete realiseerimise käigus säilitatakse seemne- ja säilikpuud vastavalt seadusele (5 tm/ha) ja/või Müüjaga eelnevalt kokkulepitud tingimustele. Tööde käigus tekkinud oksad eemaldatakse langilt ja realiseeritakse hakkepuiduks ja/või kasutatakse pehmema langi korral veoteede tugevdamiseks.\nKokkulepitud ostusumma makstakse ettemaksuna ja pärast lepingu sõlmimist. Leping loetakse kehtivaks alles siis, kui ostuhind on Müüjale 100% tasutud. Pakkumise lisana kaasas kasvava metsa raieõiguse võõrandamise lepingu blankett.",
-  jalus: "Fellin Forest OÜ | Tel. +372 5806 5274 | enrico@fellinforest.ee",
+const TYPE_TEXT: Record<OfferType, { label: string; sissejuhatus: string; pealkiri: string; tingimused: string }> = {
+  raie: {
+    label: "Raieõiguse pakkumine",
+    sissejuhatus:
+      "Edastame Teile meie ettevõtte poolt koostatud hinnapakkumise allpool kirjeldatud kinnistu raiele. Teiepoolsed küsimused ja ettepanekud on igati oodatud.",
+    pealkiri: "KAVANDATAV RAIE",
+    tingimused:
+      "Hinnapakkumise koostamisel arvestasime eelkõige Eestis kehtivaid metsaseadusi ning ekspertide poolt koostatud metsamajanduskava.\nRaiete realiseerimise käigus säilitatakse seemne- ja säilikpuud vastavalt seadusele (5 tm/ha) ja/või Müüjaga eelnevalt kokkulepitud tingimustele. Tööde käigus tekkinud oksad eemaldatakse langilt ja realiseeritakse hakkepuiduks ja/või kasutatakse pehmema langi korral veoteede tugevdamiseks.\nKokkulepitud ostusumma makstakse ettemaksuna ja pärast lepingu sõlmimist. Leping loetakse kehtivaks alles siis, kui ostuhind on Müüjale 100% tasutud. Pakkumise lisana kaasas kasvava metsa raieõiguse võõrandamise lepingu blankett.",
+  },
+  kinnistu: {
+    label: "Kinnistu ostupakkumine",
+    sissejuhatus:
+      "Edastame Teile meie ettevõtte poolt koostatud ostupakkumise allpool kirjeldatud kinnistu omandamiseks. Teiepoolsed küsimused ja ettepanekud on igati oodatud.",
+    pealkiri: "KINNISTU OSTUPAKKUMINE",
+    tingimused:
+      "Pakkumine hõlmab kinnistut koos sellel kasvava metsaga.\nOstu-müügileping sõlmitakse notariaalselt. Notari- ja riigilõivud tasub Ostja.\nOstuhind tasutakse Müüjale notariaalses lepingus kokkulepitud tingimustel.",
+  },
 };
-type Template = typeof DEFAULT_TEMPLATE;
 
-function loadTemplate(): Template {
+const templateFor = (user: string, tyyp: OfferType) => ({
+  pakkuja: "Fellin Forest OÜ\nReg. kood 17117278",
+  kontakt: ACCOUNTS[user].kontakt,
+  sissejuhatus: TYPE_TEXT[tyyp].sissejuhatus,
+  pealkiri: TYPE_TEXT[tyyp].pealkiri,
+  tingimused: TYPE_TEXT[tyyp].tingimused,
+  jalus: ACCOUNTS[user].jalus,
+});
+type Template = ReturnType<typeof templateFor>;
+const templateKey = (user: string, tyyp: OfferType) => `ff-admin-template:${user}:${tyyp}`;
+
+function loadTemplate(user: string, tyyp: OfferType): Template {
   try {
-    return { ...DEFAULT_TEMPLATE, ...JSON.parse(store.get(TEMPLATE_KEY) ?? "{}") };
+    return { ...templateFor(user, tyyp), ...JSON.parse(store.get(templateKey(user, tyyp)) ?? "{}") };
   } catch {
-    return DEFAULT_TEMPLATE;
+    return templateFor(user, tyyp);
   }
 }
 
@@ -62,19 +97,20 @@ const today = () => {
   return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}${String(d.getHours()).padStart(2, "0")}`;
 };
 
-function Login({ onOk }: { onOk: () => void }) {
+function Login({ onOk }: { onOk: (user: string) => void }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
+    const user = String(f.get("user")).trim().toLowerCase();
     setBusy(true);
     setErr("");
-    const ok = await checkLogin(String(f.get("user")).trim(), String(f.get("pass")));
+    const ok = await checkLogin(user, String(f.get("pass")));
     setBusy(false);
     if (!ok) return setErr("Vale kasutajanimi või parool");
-    store.set(AUTH_KEY, "1");
-    onOk();
+    store.set(AUTH_KEY, user);
+    onOk(user);
   }
   return (
     <form className="adm-login" onSubmit={submit}>
@@ -94,30 +130,35 @@ function Login({ onOk }: { onOk: () => void }) {
 }
 
 export default function AdminApp() {
-  const [authed, setAuthed] = useState(store.get(AUTH_KEY) === "1");
-  if (!authed) return <Login onOk={() => setAuthed(true)} />;
+  const [user, setUser] = useState(() => {
+    const u = store.get(AUTH_KEY);
+    return u && ACCOUNTS[u] ? u : null;
+  });
+  if (!user) return <Login onOk={setUser} />;
   return (
     <Generator
+      user={user}
       onLogout={() => {
         store.set(AUTH_KEY, null);
-        setAuthed(false);
+        setUser(null);
       }}
     />
   );
 }
 
-function Generator({ onLogout }: { onLogout: () => void }) {
+function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
+  const [tyyp, setTyyp] = useState<OfferType>("raie");
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [parcels, setParcels] = useState<Parcel[]>([]);
   const [maps, setMaps] = useState<Record<string, string>>({});
   const [rows, setRows] = useState<Row[]>([]);
-  const [tpl, setTpl] = useState<Template>(loadTemplate);
+  const [tpl, setTpl] = useState<Template>(() => loadTemplate(user, "raie"));
   const [nr, setNr] = useState(today);
   const [saaja, setSaaja] = useState("");
   const [hind, setHind] = useState("");
-  const [email, setEmail] = useState({ to: "", subject: "Hinnapakkumine – Fellin Forest", body: "" });
+  const [email, setEmail] = useState({ to: "", subject: "", body: "" });
   const [pdfUrl, setPdfUrl] = useState("");
   const [logo, setLogo] = useState<{ src: string; ratio: number } | null>(null);
   const docRef = useRef<jsPDF | null>(null);
@@ -136,20 +177,27 @@ function Generator({ onLogout }: { onLogout: () => void }) {
       });
   }, []);
 
-  useEffect(() => store.set(TEMPLATE_KEY, JSON.stringify(tpl)), [tpl]);
+  useEffect(() => store.set(templateKey(user, tyyp), JSON.stringify(tpl)), [user, tyyp, tpl]);
+
+  const changeType = (t: OfferType) => {
+    setTyyp(t);
+    setTpl(loadTemplate(user, t));
+  };
 
   useEffect(() => {
+    const objekt = `kinnistu${parcels.length > 1 ? "te" : ""} ${parcels.map((p) => p.tunnus).join(", ")}`;
     setEmail((e) => ({
       ...e,
-      body: `Tere${saaja ? ` ${saaja.split("\n")[0]}` : ""}!\n\nSaadan manuses hinnapakkumise kinnistu${parcels.length > 1 ? "te" : ""} ${parcels.map((p) => p.tunnus).join(", ")} raieks.\nKüsimuste korral võtke julgelt ühendust.\n\nLugupidamisega\n${tpl.kontakt}`,
+      subject: tyyp === "raie" ? "Raieõiguse hinnapakkumine – Fellin Forest" : "Kinnistu ostupakkumine – Fellin Forest",
+      body: `Tere${saaja ? ` ${saaja.split("\n")[0]}` : ""}!\n\nSaadan manuses ${tyyp === "raie" ? `hinnapakkumise ${objekt} raieks` : `ostupakkumise ${objekt} kohta`}.\nKüsimuste korral võtke julgelt ühendust.\n\nLugupidamisega\n${tpl.kontakt}`,
     }));
-  }, [saaja, parcels, tpl.kontakt]);
+  }, [tyyp, saaja, parcels, tpl.kontakt]);
 
   // Eelvaade uueneb iga muudatuse järel (väikese viitega, et trükkimine ei hakiks)
   useEffect(() => {
     if (!logo || !parcels.length) return;
     const t = setTimeout(() => {
-      const doc = buildPdf({ ...tpl, nr, saaja, hind, parcels, maps, rows }, logo.src, logo.ratio);
+      const doc = buildPdf({ ...tpl, tyyp, nr, saaja, hind, parcels, maps, rows }, logo.src, logo.ratio);
       docRef.current = doc;
       const url = URL.createObjectURL(doc.output("blob"));
       setPdfUrl((old) => {
@@ -158,7 +206,7 @@ function Generator({ onLogout }: { onLogout: () => void }) {
       });
     }, 400);
     return () => clearTimeout(t);
-  }, [logo, tpl, nr, saaja, hind, parcels, maps, rows]);
+  }, [logo, tpl, tyyp, nr, saaja, hind, parcels, maps, rows]);
 
   async function search(e: FormEvent) {
     e.preventDefault();
@@ -195,7 +243,7 @@ function Generator({ onLogout }: { onLogout: () => void }) {
     setRows((rs) => rs.filter((r) => r.tunnus !== t));
   };
   const setRow = (id: number, patch: Partial<Row>) => setRows((rs) => rs.map((r) => (r.id === id ? { ...r, ...patch } : r)));
-  const fileName = `Pakkumine ${nr}.pdf`;
+  const fileName = `${tyyp === "raie" ? "Raiepakkumine" : "Kinnistu ostupakkumine"} ${nr}.pdf`;
 
   function download() {
     docRef.current?.save(fileName);
@@ -232,8 +280,17 @@ function Generator({ onLogout }: { onLogout: () => void }) {
       <header className="adm-head">
         <img src="/images/logo3.png" alt="Fellin Forest" />
         <h1>Pakkumise generaator</h1>
+        <span className="adm-hint">{ACCOUNTS[user].kontakt.split(",")[0]}</span>
         <button className="adm-link" onClick={onLogout}>Logi välja</button>
       </header>
+
+      <div className="adm-types" role="radiogroup" aria-label="Pakkumise tüüp">
+        {(Object.keys(TYPE_TEXT) as OfferType[]).map((t) => (
+          <button key={t} role="radio" aria-checked={tyyp === t} className={tyyp === t ? "on" : ""} onClick={() => changeType(t)}>
+            {TYPE_TEXT[t].label}
+          </button>
+        ))}
+      </div>
 
       <form className="adm-search" onSubmit={search}>
         <label htmlFor="q">Katastritunnus(ed) või kinnistu number</label>
@@ -272,7 +329,9 @@ function Generator({ onLogout }: { onLogout: () => void }) {
             </section>
 
             <section>
-              <h2>Raie</h2>
+              <h2>{tyyp === "raie" ? "Raie" : "Hind"}</h2>
+              {tyyp === "raie" && (
+              <>
               <p className="adm-hint">
                 Read tulevad kehtivatest metsateatistest, nende puudumisel kõikidest eraldistest. Mahud sisesta käsitsi
                 (nt metsaregistrist või metsamajanduskavast).
@@ -347,8 +406,10 @@ function Generator({ onLogout }: { onLogout: () => void }) {
                 </button>
                 {missingVol > 0 && <span className="adm-fill">{missingVol} rida ilma mahuta</span>}
               </div>
+              </>
+              )}
               <label>
-                Hind kokku (EUR)
+                {tyyp === "raie" ? "Hind kokku (EUR)" : "Pakutav ostuhind (EUR)"}
                 <input inputMode="decimal" value={hind} onChange={(e) => setHind(e.target.value)} placeholder="nt 8500" />
               </label>
             </section>
@@ -393,7 +454,7 @@ function Generator({ onLogout }: { onLogout: () => void }) {
               </label>
               <p className="adm-hint">
                 Pakkuja, kontakt, tekstid ja jalus jäävad selles brauseris meelde.{" "}
-                <button className="adm-link" onClick={() => setTpl(DEFAULT_TEMPLATE)}>Taasta vaikimisi tekstid</button>
+                <button className="adm-link" onClick={() => setTpl(templateFor(user, tyyp))}>Taasta vaikimisi tekstid</button>
               </p>
             </section>
 

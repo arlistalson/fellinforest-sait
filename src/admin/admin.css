@@ -13,6 +13,9 @@
 .adm-head img { height: 44px; }
 .adm-head h1 { font-size: 1.3rem; margin: 0; flex: 1; }
 
+.adm-types { display: inline-flex; margin-top: 20px; border: 1px solid var(--green); border-radius: 30px; overflow: hidden; }
+.adm-types button { border: none; background: #fff; color: var(--green); font: inherit; font-size: 0.95rem; font-weight: 600; padding: 9px 20px; cursor: pointer; }
+.adm-types button.on { background: var(--green); color: #fff; }
 .adm-search { margin: 20px 0; max-width: 760px; }
 .adm-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
 .adm-search .adm-row input { flex: 1; min-width: 220px; margin: 0; }
