@@ -149,8 +149,10 @@ export default function AdminApp() {
 function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
   const [tyyp, setTyyp] = useState<OfferType>("raie");
   const [query, setQuery] = useState("");
+  const [addQuery, setAddQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [errorAt, setErrorAt] = useState<"search" | "add">("search");
   const [parcels, setParcels] = useState<Parcel[]>([]);
   const [maps, setMaps] = useState<Record<string, string>>({});
   const [rows, setRows] = useState<Row[]>([]);
@@ -209,34 +211,64 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
     return () => clearTimeout(t);
   }, [logo, tpl, tyyp, nr, saaja, hind, hinnad, parcels, maps, rows]);
 
-  async function search(e: FormEvent) {
-    e.preventDefault();
-    const { tunnused, kinnistud, bad } = parseInput(query);
-    if (bad.length) return setError(`Ei tunne ära: ${bad.join(", ")} (katastritunnus nt 31701:003:0123 või kinnistu nr)`);
-    if (!tunnused.length && !kinnistud.length) return setError("Sisesta katastritunnus või kinnistu number");
+  /** Toob kinnistud. append=true lisab olemasolevale pakkumisele (pakett), muidu alustab uut. */
+  async function load(input: string, append: boolean): Promise<boolean> {
+    const { tunnused, kinnistud, bad } = parseInput(input);
+    setErrorAt(append ? "add" : "search");
+    if (bad.length) {
+      setError(`Ei tunne ära: ${bad.join(", ")} (katastritunnus nt 31701:003:0123 või kinnistu nr)`);
+      return false;
+    }
+    if (!tunnused.length && !kinnistud.length) {
+      setError("Sisesta katastritunnus või kinnistu number");
+      return false;
+    }
     setLoading(true);
     setError("");
     try {
-      const ps = await fetchParcels(tunnused, kinnistud);
-      const missing = tunnused.filter((t) => !ps.some((p) => p.tunnus === t));
-      if (!ps.length) throw new Error("Ühtegi katastriüksust ei leitud");
-      const [rs, mapList] = await Promise.all([
+      const found = await fetchParcels(tunnused, kinnistud);
+      const missing = tunnused.filter((t) => !found.some((p) => p.tunnus === t));
+      if (!found.length) throw new Error("Ühtegi katastriüksust ei leitud");
+      const ps = append ? found.filter((p) => !parcels.some((x) => x.tunnus === p.tunnus)) : found;
+      if (!ps.length) throw new Error("Need kinnistud on juba pakkumises");
+      const [fetched, mapList] = await Promise.all([
         fetchRows(ps.map((p) => p.tunnus)),
         Promise.all(ps.map((p) => renderMap(p).catch(() => ""))),
       ]);
-      setParcels(ps);
-      setRows(rs);
-      setMaps(Object.fromEntries(ps.map((p, i) => [p.tunnus, mapList[i]])));
+      const newMaps = Object.fromEntries(ps.map((p, i) => [p.tunnus, mapList[i]]));
+      if (append) {
+        // fetchRows nummerdab alati 1-st – nihuta id-d, et need ei kattuks olemasolevatega
+        const base = rows.reduce((a, r) => Math.max(a, r.id), 0);
+        setParcels((old) => [...old, ...ps]);
+        setRows((old) => [...old, ...fetched.map((r, i) => ({ ...r, id: base + i + 1 }))]);
+        setMaps((old) => ({ ...old, ...newMaps }));
+      } else {
+        setParcels(ps);
+        setRows(fetched);
+        setMaps(newMaps);
+      }
       const warn = [
         missing.length && `Ei leitud: ${missing.join(", ")}`,
         mapList.some((m) => !m) && "Mõne kaardipildi laadimine ebaõnnestus",
       ].filter(Boolean);
       if (warn.length) setError(warn.join(". "));
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Päring ebaõnnestus");
+      return false;
     } finally {
       setLoading(false);
     }
+  }
+
+  async function search(e: FormEvent) {
+    e.preventDefault();
+    await load(query, false);
+  }
+
+  async function addParcels(e: FormEvent) {
+    e.preventDefault();
+    if (await load(addQuery, true)) setAddQuery("");
   }
 
   const removeParcel = (t: string) => {
@@ -304,7 +336,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
           />
           <button className="btn btn-solid" disabled={loading}>{loading ? "Laen…" : "Too andmed"}</button>
         </div>
-        {error && <p className="adm-error" role="alert">{error}</p>}
+        {error && errorAt === "search" && <p className="adm-error" role="alert">{error}</p>}
       </form>
 
       {parcels.length > 0 && (
@@ -327,6 +359,19 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
                   </figure>
                 ))}
               </div>
+              <form className="adm-search" onSubmit={addParcels}>
+                <label htmlFor="add-q">Lisa pakkumisse veel kinnistuid (pakett)</label>
+                <div className="adm-row">
+                  <input
+                    id="add-q"
+                    value={addQuery}
+                    onChange={(e) => setAddQuery(e.target.value)}
+                    placeholder="katastritunnus(ed) või kinnistu nr"
+                  />
+                  <button className="btn btn-ghost" disabled={loading}>{loading ? "Laen…" : "+ Lisa kinnistu"}</button>
+                </div>
+                {error && errorAt === "add" && <p className="adm-error" role="alert">{error}</p>}
+              </form>
             </section>
 
             <section>

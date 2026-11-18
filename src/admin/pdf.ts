@@ -104,7 +104,8 @@ export function buildPdf(o: Offer, logo: string, logoRatio: number): jsPDF {
       ["Muu maa:", ha(p.muumaa)],
     ];
     if (p.kinnistu) facts.splice(4, 0, ["Kinnistu nr:", p.kinnistu]);
-    const price = o.tyyp === "kinnistu" ? num(o.hinnad[p.tunnus] ?? "") : 0;
+    // Ühe kinnistu puhul piisab all olevast ostuhinnast – kinnistu juures näidatakse hinda ainult paketis
+    const price = o.tyyp === "kinnistu" && o.parcels.length > 1 ? num(o.hinnad[p.tunnus] ?? "") : 0;
     if (price) facts.push(["Pakutav hind:", eur(price)]);
     const blockH = Math.max(imgH, 12 + facts.length * 5.2);
     ensure(blockH + 4);
