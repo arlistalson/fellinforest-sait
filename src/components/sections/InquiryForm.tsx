@@ -38,11 +38,10 @@ export default function InquiryForm() {
             {status !== "sent" && (
               <form
                 className="inquiry-form"
-                action="https://formspree.io/f/mgogvebk"
+                action="https://fellinforest-inquiry.virtsutunn-booking.workers.dev"
                 method="POST"
                 onSubmit={handleSubmit}
               >
-                <input type="hidden" name="_subject" value="Uus hinnapäring – fellinforest.ee" />
                 <input
                   type="text"
                   name="_gotcha"

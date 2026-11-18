@@ -1,0 +1,16 @@
+name = "fellinforest-inquiry"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://fellinforest.ee,https://www.fellinforest.ee"
+
+# Max 5 päringut ühelt IP-lt minutis.
+[[ratelimits]]
+name = "INQUIRY_LIMITER"
+namespace_id = "1002"
+simple = { limit = 5, period = 60 }
+
+# Saladused (seadista `npx wrangler@4 secret put <NIMI>`, ära kunagi commit'i):
+#   TELEGRAM_BOT_TOKEN
+#   TELEGRAM_CHAT_ID
