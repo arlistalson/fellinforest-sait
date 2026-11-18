@@ -191,7 +191,10 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
     const objekt = `kinnistu${parcels.length > 1 ? "te" : ""} ${parcels.map((p) => p.tunnus).join(", ")}`;
     setEmail((e) => ({
       ...e,
-      subject: tyyp === "raie" ? "Raieõiguse hinnapakkumine – Fellin Forest" : "Kinnistu ostupakkumine – Fellin Forest",
+      subject:
+        tyyp === "raie"
+          ? "Raieõiguse hinnapakkumine – Fellin Forest"
+          : `Kinnistu${parcels.length > 1 ? "te" : ""} ostupakkumine – Fellin Forest`,
       body: `Tere${saaja ? ` ${saaja.split("\n")[0]}` : ""}!\n\nSaadan manuses ${tyyp === "raie" ? `hinnapakkumise ${objekt} raieks` : `ostupakkumise ${objekt} kohta`}.\nKüsimuste korral võtke julgelt ühendust.\n\nLugupidamisega\n${tpl.kontakt}`,
     }));
   }, [tyyp, saaja, parcels, tpl.kontakt]);
@@ -276,7 +279,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
     setRows((rs) => rs.filter((r) => r.tunnus !== t));
   };
   const setRow = (id: number, patch: Partial<Row>) => setRows((rs) => rs.map((r) => (r.id === id ? { ...r, ...patch } : r)));
-  const fileName = `${tyyp === "raie" ? "Raiepakkumine" : "Kinnistu ostupakkumine"} ${nr}.pdf`;
+  const fileName = `${tyyp === "raie" ? "Raiepakkumine" : `Kinnistu${parcels.length > 1 ? "te" : ""} ostupakkumine`} ${nr}.pdf`;
 
   function download() {
     docRef.current?.save(fileName);
@@ -520,7 +523,8 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
                 <input {...tplField("jalus")} />
               </label>
               <p className="adm-hint">
-                Pakkuja, kontakt, tekstid ja jalus jäävad selles brauseris meelde.{" "}
+                Pakkuja, kontakt, tekstid ja jalus jäävad selles brauseris meelde. Mitme kinnistu puhul pannakse
+                „kinnistu” PDF-is ise mitmusesse (kinnistute).{" "}
                 <button className="adm-link" onClick={() => setTpl(templateFor(user, tyyp))}>Taasta vaikimisi tekstid</button>
               </p>
             </section>

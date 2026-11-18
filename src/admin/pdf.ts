@@ -32,7 +32,24 @@ const fmt = (n: number, d: number) => String(Math.round(n * 10 ** d) / 10 ** d);
 // "120000" → "120 000 EUR" (tavaline tühik – WinAnsi fondis on see kindlalt olemas)
 export const eur = (n: number) => `${fmt(n, 2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} EUR`;
 
-export function buildPdf(o: Offer, logo: string, logoRatio: number): jsPDF {
+// Vaiketekstid on ainsuses; paketi (mitu kinnistut) puhul pannakse need PDF-is mitmusesse.
+// Töötab ka salvestatud/muudetud tekstidel, kui fraas on alles – muul juhul jääb tekst puutumata.
+const PLURAL: [string, string][] = [
+  ["kirjeldatud kinnistu ", "kirjeldatud kinnistute "],
+  ["hõlmab kinnistut koos sellel kasvava", "hõlmab kinnistuid koos neil kasvava"],
+  ["KINNISTU OSTUPAKKUMINE", "KINNISTUTE OSTUPAKKUMINE"],
+];
+export const pluralize = (text: string, count: number) =>
+  count > 1 ? PLURAL.reduce((t, [one, many]) => t.split(one).join(many), text) : text;
+
+export function buildPdf(input: Offer, logo: string, logoRatio: number): jsPDF {
+  const n = input.parcels.length;
+  const o: Offer = {
+    ...input,
+    sissejuhatus: pluralize(input.sissejuhatus, n),
+    pealkiri: pluralize(input.pealkiri, n),
+    tingimused: pluralize(input.tingimused, n),
+  };
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   doc.setFont("helvetica", "normal");
   let y = 0;
