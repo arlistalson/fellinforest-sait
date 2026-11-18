@@ -134,12 +134,10 @@ export default function Hinnakujundus() {
           riigilõivu tasume meie, vahendustasu me ei võta. Sulle jääb kokkulepitud ostuhind.
         </p>
         <p>
-          Ainus, millega tasub eraldi arvestada, on tulumaks. Füüsilise isiku puhul maksustatakse
-          üldjuhul kasu ehk müügihinna ning soetusmaksumuse ja müügiga seotud kulude vahe.
-          Metsamaterjali ja raieõiguse võõrandamisest saadud tulust saab teatud tingimustel maha
-          arvata kuni 5000 eurot aastas. Kuna maksureeglid muutuvad ja palju sõltub sellest, kuidas
-          maa on omandatud, tasub oma olukord üle kontrollida Maksu- ja Tolliameti lehel või
-          maksunõustajaga – maksunõustamist me ise ei paku.
+          Ainus, millega tasub eraldi arvestada, on tulumaks. See sõltub sellest, kas müüd
+          raieõiguse või kogu kinnistu – raieõiguse müügil kehtib näiteks kuni 5000 euro suurune
+          aastane soodustus, kinnistu müügil mitte. Lähemalt selgitame seda{" "}
+          <Link to="/metsa-muuk/">metsa müügi juhendis</Link>. Maksunõustamist me ise ei paku.
         </p>
       </TextSection>
 

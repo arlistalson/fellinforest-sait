@@ -9,6 +9,7 @@ const underlineVariants: Variants = {
 };
 
 const NAV_LINKS = [
+  { to: "/metsa-muuk/", label: "Metsa müük" },
   { to: "/metsakinnistute-ost/", label: "Metsakinnistud" },
   { to: "/raieoiguse-ost/", label: "Raieõigus" },
   { to: "/pollumaa-ost/", label: "Põllumaa" },

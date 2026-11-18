@@ -10,8 +10,8 @@ export default function Pollumaa() {
     <>
       <PageHero
         crumb="Põllumaa ost"
-        eyebrow="Põllumaa ost"
-        title="Ostame põllumaad ja rohumaid üle Eesti"
+        eyebrow="Põllumaa müük"
+        title="Põllumaa müük – ostame põllumaad ja rohumaid"
         lead="Ostame nii haritavat põllumaad kui ka kasutusest väljas olevaid maatükke – ka siis, kui maa on rendile antud. Päringuks piisab katastritunnusest ja pakkumise teeme 24 tunni jooksul."
       />
 

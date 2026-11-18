@@ -17,7 +17,7 @@ export default function Piirkonnad() {
       <PageHero
         crumb="Viljandimaa ja teised maakonnad"
         eyebrow="Piirkonnad"
-        title="Metsa ost Viljandimaal ja mujal Eestis"
+        title="Metsa müük Viljandimaal ja mujal Eestis"
         lead={`Fellin Forest OÜ kontor asub Viljandis (${addressLine}). Viljandimaa metsad tunneme kõige paremini, kuid ostame metsakinnistuid, raieõigust ja põllumaad kõigis 15 maakonnas – ka saartel.`}
       />
 

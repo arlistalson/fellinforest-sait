@@ -11,8 +11,8 @@ export default function Raieoigus() {
     <>
       <PageHero
         crumb="Raieõiguse ost"
-        eyebrow="Raieõiguse ost"
-        title="Müü raieõigus – maa jääb sinu omandisse"
+        eyebrow="Raieõiguse müük"
+        title="Raieõiguse müük – maa jääb sinu omandisse"
         lead="Raieõiguse müügil müüd ainult õiguse kokkulepitud alal ja ajal metsa raiuda. Kinnistu jääb sinu nimele, raha laekub enne raie algust ja pärast töid jääb korrastatud raiesmik."
       />
 

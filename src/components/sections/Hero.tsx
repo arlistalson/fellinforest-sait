@@ -13,7 +13,7 @@ export default function Hero() {
           animate="visible"
           variants={fadeUp}
         >
-          <p className="eyebrow">Metsa ost ja majandamine</p>
+          <p className="eyebrow">Metsa ja raieõiguse ost</p>
           <h1>Müü oma mets õiglase hinnaga</h1>
           <p className="lead">
             Ostame metsakinnistuid ja raieõigust üle Eesti. Saada päring ja teeme sulle tasuta

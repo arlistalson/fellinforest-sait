@@ -29,7 +29,7 @@ export const FAQ_GENERAL: QA[] = [
   {
     q: "Kas metsa müügilt tuleb tulumaksu maksta?",
     a: [
-      "Füüsilise isiku puhul maksustatakse üldjuhul kasu ehk müügihinna ja soetusmaksumuse ning müügiga seotud kulude vahe. Metsamaterjali ja raieõiguse võõrandamisest saadud tulust saab teatud tingimustel maha arvata kuni 5000 eurot aastas.",
+      "Füüsilise isiku puhul maksustatakse üldjuhul kasu ehk müügihinna ja soetusmaksumuse ning müügiga seotud kulude vahe. Raieõiguse ja oma kinnistult raiutud metsamaterjali müügitulust saab maha arvata kuni 5000 eurot aastas inimese kohta – kogu kinnistu müügi puhul see soodustus ei kehti.",
       "Palju sõltub sellest, kuidas maa on omandatud (ost, pärimine, erastamine, tagastamine). Kuna maksureeglid muutuvad, tasub oma olukord üle kontrollida Maksu- ja Tolliameti lehel või maksunõustajaga – meie oskame öelda, millega tavaliselt arvestatakse, kuid maksunõustamist me ei paku.",
     ],
   },
@@ -309,6 +309,44 @@ export const FAQ_MAAKONNAD: QA[] = [
     q: "Kui kiiresti jõuate kinnistut vaatama?",
     a: [
       "Viljandimaal ja naabermaakondades tavaliselt paari päevaga. Kaugemale sõidame kokkuleppel – kuid enamiku pakkumistest teeme niikuinii andmete põhjal, ilma et peaksime ootama kohapealset ülevaatust.",
+    ],
+  },
+];
+
+/** Metsa müügi juhendi KKK – küsimused, mida teised lehed ei kata. */
+export const FAQ_METSA_MUUK: QA[] = [
+  {
+    q: "Kui kiiresti saab metsa maha müüa?",
+    a: [
+      "Pakkumise teeme 24 tunni jooksul pärast katastritunnuse saamist. Kui hind sobib, jõuab notariaalse tehinguni tavaliselt 1–3 nädalaga – see sõltub dokumentide korrasolekust ja notari vabadest aegadest.",
+      "Kinnistu müügil laekub raha tehingu sõlmimisel, raieõiguse müügil enne raie algust.",
+    ],
+  },
+  {
+    q: "Kas metsa müümiseks on vaja metsamajandamiskava või värsket takseerimist?",
+    a: [
+      "Müügiks ei ole. Pakkumise teeme metsaregistri andmete, kaardimaterjali ja vajadusel kohapealse ülevaatuse põhjal. Kui sul on värske takseerimine või majandamiskava olemas, saada see kaasa – siis saame pakkumise teha täpsemalt.",
+      "Raie tegemiseks peavad aga metsaregistris olema kehtivad inventeerimisandmed – need kehtivad kümme aastat. Kui andmed on vanemad, tuleb enne raiet teha uus metsainventeerimine.",
+    ],
+  },
+  {
+    q: "Kas saan müüa ainult osa oma metsast?",
+    a: [
+      "Jah, kahel viisil. Kõige kiirem on müüa raieõigus ainult kokkulepitud eraldistele – ülejäänud mets ja kogu maa jäävad sulle.",
+      "Kui soovid müüa osa kinnistust koos maaga, tuleb kinnistu esmalt jagada. See võtab aega ja vajab maamõõtja tööd; ütleme ette, kas see on sinu puhul mõistlik.",
+    ],
+  },
+  {
+    q: "Kas tasub küsida pakkumist mitmelt ostjalt?",
+    a: [
+      "Jah, kindlasti. Metsa müüakse elu jooksul tavaliselt üks kord ja pakkumised võivad märgatavalt erineda. Võrdle mitte ainult summat, vaid ka seda, kes maksab notaritasu, millal raha laekub ja mis seisu mets või raiesmik jääb.",
+      "Meie pakkumine ei kohusta sind millekski ja seda võib rahulikult teistega võrrelda.",
+    ],
+  },
+  {
+    q: "Mis vahe on otse ostjale ja vahendaja kaudu müümisel?",
+    a: [
+      "Vahendaja otsib sinu metsale ostja ja võtab selle eest tasu. Otse ostjale müües seda vahelüli ei ole. Meie ostame metsa ise, pikaajalise majandamise eesmärgil, ja vahendustasu me ei võta.",
     ],
   },
 ];

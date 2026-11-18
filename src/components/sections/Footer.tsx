@@ -17,6 +17,7 @@ export default function Footer() {
         >
           <motion.div className="footer-col" variants={staggerItem}>
             <h4>Teenused</h4>
+            <Link to="/metsa-muuk/">Metsa müük</Link>
             <Link to="/metsakinnistute-ost/">Metsakinnistute ost</Link>
             <Link to="/raieoiguse-ost/">Raieõiguse ost</Link>
             <Link to="/pollumaa-ost/">Põllumaa ost</Link>

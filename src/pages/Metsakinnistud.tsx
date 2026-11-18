@@ -11,8 +11,8 @@ export default function Metsakinnistud() {
     <>
       <PageHero
         crumb="Metsakinnistute ost"
-        eyebrow="Metsakinnistute ost"
-        title="Ostame metsakinnistuid üle Eesti"
+        eyebrow="Metsakinnistu müük"
+        title="Metsakinnistu müük – ostame metsa üle Eesti"
         lead="Ostame nii raieküpset metsa kui ka läbiraiutud, hüpoteegiga või kaasomandis kinnistuid. Päringuks piisab katastritunnusest – ülejäänu selgitame ise välja ja teeme pakkumise 24 tunni jooksul."
       />
 

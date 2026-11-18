@@ -8,10 +8,12 @@ import {
   FAQ_MAAKONNAD,
   FAQ_METSAKINNISTU,
   FAQ_METSAMAJANDAMINE,
+  FAQ_METSA_MUUK,
   FAQ_POLLUMAA,
   FAQ_RAIEOIGUS,
 } from "./content/faq";
 import Home from "./pages/Home";
+import MetsaMuuk from "./pages/MetsaMuuk";
 import Metsakinnistud from "./pages/Metsakinnistud";
 import Raieoigus from "./pages/Raieoigus";
 import Pollumaa from "./pages/Pollumaa";
@@ -33,11 +35,23 @@ export const ROUTES: Route[] = [
     component: Home,
     source: "src/pages/Home.tsx",
     breadcrumb: "Avaleht",
-    title: "Ostame metsakinnistuid ja raieõigust – Fellin Forest",
+    title: "Metsa ost üle Eesti: müü mets või raieõigus – Fellin Forest",
     description:
-      "Ostame metsakinnistuid, raieõigust ja põllumaad üle Eesti. Tasuta hindamine, konkreetne pakkumine 24 tunni jooksul, notaritasud meie kanda.",
+      "Müü mets ilma vahendajata: ostame metsakinnistuid, raieõigust ja põllumaad üle Eesti. Tasuta hindamine, pakkumine 24 tunniga, notaritasud meie kanda.",
     faq: FAQ_GENERAL,
     priority: "1.0",
+    changefreq: "monthly",
+  },
+  {
+    path: "/metsa-muuk/",
+    component: MetsaMuuk,
+    source: "src/pages/MetsaMuuk.tsx",
+    breadcrumb: "Metsa müük",
+    title: "Metsa müük: juhend metsaomanikule – Fellin Forest",
+    description:
+      "Metsa müük samm-sammult: kas müüa kinnistu või raieõigus, millest sõltub metsa hind ja kuidas ostjate pakkumisi võrrelda. Tasuta pakkumine 24 tunniga.",
+    faq: FAQ_METSA_MUUK,
+    priority: "0.9",
     changefreq: "monthly",
   },
   {
@@ -45,9 +59,9 @@ export const ROUTES: Route[] = [
     component: Metsakinnistud,
     source: "src/pages/Metsakinnistud.tsx",
     breadcrumb: "Metsakinnistute ost",
-    title: "Metsakinnistute ost üle Eesti – Fellin Forest",
+    title: "Metsakinnistu müük – ostame metsa üle Eesti – Fellin Forest",
     description:
-      "Ostame metsakinnistuid üle Eesti – ka läbiraiutud, hüpoteegiga ja kaasomandis kinnistuid. Päringuks piisab katastritunnusest, pakkumine 24 tunniga.",
+      "Metsakinnistu müük kiirelt ja ilma kuludeta: ostame ka läbiraiutud, hüpoteegiga ja kaasomandis kinnistuid. Piisab katastritunnusest, pakkumine 24 tunniga.",
     faq: FAQ_METSAKINNISTU,
     service: {
       name: "Metsakinnistute ost",
@@ -63,9 +77,9 @@ export const ROUTES: Route[] = [
     component: Raieoigus,
     source: "src/pages/Raieoigus.tsx",
     breadcrumb: "Raieõiguse ost",
-    title: "Raieõiguse ost, maa jääb sulle – Fellin Forest",
+    title: "Raieõiguse müük, maa jääb sulle – Fellin Forest",
     description:
-      "Ostame raieõigust üle Eesti. Maa jääb sinu omandisse, raha laekub enne raie algust ja pärast töid jääb korrastatud raiesmik. Küsi tasuta pakkumist.",
+      "Raieõiguse müük üle Eesti: maa jääb sinu omandisse, raha laekub enne raie algust ja pärast töid jääb korrastatud raiesmik. Küsi tasuta pakkumist.",
     faq: FAQ_RAIEOIGUS,
     service: {
       name: "Raieõiguse ost",
@@ -81,7 +95,7 @@ export const ROUTES: Route[] = [
     component: Pollumaa,
     source: "src/pages/Pollumaa.tsx",
     breadcrumb: "Põllumaa ost",
-    title: "Põllumaa ost üle Eesti – Fellin Forest",
+    title: "Põllumaa müük ja põllumaa ost üle Eesti – Fellin Forest",
     description:
       "Ostame põllumaad, rohumaid ja sööti jäänud maatükke üle Eesti. Ka rendile antud maa – leping jääb kehtima. Tasuta hindamine, pakkumine 24 tunniga.",
     faq: FAQ_POLLUMAA,
@@ -129,7 +143,7 @@ export const ROUTES: Route[] = [
     component: Piirkonnad,
     source: "src/pages/Piirkonnad.tsx",
     breadcrumb: "Viljandimaa ja teised maakonnad",
-    title: "Metsa ost Viljandimaal ja üle Eesti – Fellin Forest",
+    title: "Metsa müük ja metsa ost Viljandimaal – Fellin Forest",
     description:
       "Fellin Forest OÜ kontor on Viljandis, Lossi tn 15. Ostame metsakinnistuid, raieõigust ja põllumaad kõigis 15 maakonnas – ka Saaremaal ja Hiiumaal.",
     faq: FAQ_MAAKONNAD,
