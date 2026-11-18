@@ -13,6 +13,7 @@ export type Offer = {
   pealkiri: string;
   hind: string; // raiepakkumise koguhind
   hinnad: Record<string, string>; // kinnistu ostupakkumine: hind katastritunnuse kaupa
+  paketihind: string; // mitu kinnistut: üks hind kõigile kokku (kui täidetud, kinnistu kaupa hindu ei näidata)
   tingimused: string;
   jalus: string; // "vasak | keskmine | parem"
   parcels: Parcel[];
@@ -50,6 +51,8 @@ export function buildPdf(input: Offer, logo: string, logoRatio: number): jsPDF {
     pealkiri: pluralize(input.pealkiri, n),
     tingimused: pluralize(input.tingimused, n),
   };
+  // Paketihind kehtib ainult mitme kinnistu puhul (väli on peidus, kui kinnistu on üks)
+  const pkg = n > 1 ? num(o.paketihind) : 0;
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   doc.setFont("helvetica", "normal");
   let y = 0;
@@ -122,7 +125,7 @@ export function buildPdf(input: Offer, logo: string, logoRatio: number): jsPDF {
     ];
     if (p.kinnistu) facts.splice(4, 0, ["Kinnistu nr:", p.kinnistu]);
     // Ühe kinnistu puhul piisab all olevast ostuhinnast – kinnistu juures näidatakse hinda ainult paketis
-    const price = o.tyyp === "kinnistu" && o.parcels.length > 1 ? num(o.hinnad[p.tunnus] ?? "") : 0;
+    const price = o.tyyp === "kinnistu" && o.parcels.length > 1 && !pkg ? num(o.hinnad[p.tunnus] ?? "") : 0;
     if (price) facts.push(["Pakutav hind:", eur(price)]);
     const blockH = Math.max(imgH, 12 + facts.length * 5.2);
     ensure(blockH + 4);
@@ -138,7 +141,7 @@ export function buildPdf(input: Offer, logo: string, logoRatio: number): jsPDF {
   }
 
   if (o.tyyp === "kinnistu") {
-    const total = o.parcels.reduce((a, p) => a + num(o.hinnad[p.tunnus] ?? ""), 0);
+    const total = pkg || o.parcels.reduce((a, p) => a + num(o.hinnad[p.tunnus] ?? ""), 0);
     if (total) {
       ensure(14);
       const label = o.parcels.length > 1 ? "Pakutav ostuhind kokku" : "Pakutav ostuhind";

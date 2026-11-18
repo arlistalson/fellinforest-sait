@@ -161,6 +161,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
   const [saaja, setSaaja] = useState("");
   const [hind, setHind] = useState("");
   const [hinnad, setHinnad] = useState<Record<string, string>>({});
+  const [paketihind, setPaketihind] = useState("");
   const [email, setEmail] = useState({ to: "", subject: "", body: "" });
   const [pdfUrl, setPdfUrl] = useState("");
   const [logo, setLogo] = useState<{ src: string; ratio: number } | null>(null);
@@ -203,7 +204,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
   useEffect(() => {
     if (!logo || !parcels.length) return;
     const t = setTimeout(() => {
-      const doc = buildPdf({ ...tpl, tyyp, nr, saaja, hind, hinnad, parcels, maps, rows }, logo.src, logo.ratio);
+      const doc = buildPdf({ ...tpl, tyyp, nr, saaja, hind, hinnad, paketihind, parcels, maps, rows }, logo.src, logo.ratio);
       docRef.current = doc;
       const url = URL.createObjectURL(doc.output("blob"));
       setPdfUrl((old) => {
@@ -212,7 +213,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
       });
     }, 400);
     return () => clearTimeout(t);
-  }, [logo, tpl, tyyp, nr, saaja, hind, hinnad, parcels, maps, rows]);
+  }, [logo, tpl, tyyp, nr, saaja, hind, hinnad, paketihind, parcels, maps, rows]);
 
   /** Toob kinnistud. append=true lisab olemasolevale pakkumisele (pakett), muidu alustab uut. */
   async function load(input: string, append: boolean): Promise<boolean> {
@@ -476,9 +477,26 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
                     </label>
                   ))}
                   {parcels.length > 1 && (
-                    <p>
-                      <b>Kokku: {eur(parcels.reduce((a, p) => a + num(hinnad[p.tunnus] ?? ""), 0))}</b>
-                    </p>
+                    <>
+                      <label>
+                        Paketi hind kokku (EUR) – üks hind kõigile kinnistutele
+                        <input
+                          inputMode="decimal"
+                          value={paketihind}
+                          onChange={(e) => setPaketihind(e.target.value)}
+                          placeholder="nt 95000"
+                        />
+                      </label>
+                      <p className="adm-hint">
+                        Kui paketi hind on täidetud, läheb PDF-i ainult see ja kinnistu kaupa hindu ei näidata. Jäta tühjaks,
+                        et näidata hinda iga kinnistu juures ja nende summat.
+                      </p>
+                      <p>
+                        <b>
+                          Kokku: {eur(num(paketihind) || parcels.reduce((a, p) => a + num(hinnad[p.tunnus] ?? ""), 0))}
+                        </b>
+                      </p>
+                    </>
                   )}
                 </>
               )}
