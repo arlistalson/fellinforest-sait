@@ -286,6 +286,12 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
     docRef.current?.save(fileName);
   }
 
+  function saveAs() {
+    const name = prompt("Faili nimi", fileName.replace(/\.pdf$/, ""))?.trim();
+    if (!name) return;
+    docRef.current?.save(name.toLowerCase().endsWith(".pdf") ? name : `${name}.pdf`);
+  }
+
   async function send() {
     const doc = docRef.current;
     if (!doc) return;
@@ -563,7 +569,7 @@ function Generator({ user, onLogout }: { user: string; onLogout: () => void }) {
               </label>
               <div className="adm-row">
                 <button className="btn btn-solid" onClick={send} disabled={!pdfUrl}>Saada e-postiga</button>
-                <button className="btn btn-ghost" onClick={download} disabled={!pdfUrl}>Laadi PDF alla</button>
+                <button className="btn btn-ghost" onClick={saveAs} disabled={!pdfUrl}>Laadi PDF alla</button>
               </div>
               <p className="adm-hint">
                 Telefonis avaneb jagamismenüü ja PDF on manuses. Arvutis laaditakse PDF alla ja avaneb meiliprogramm, kus
