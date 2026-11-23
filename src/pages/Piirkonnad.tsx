@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../motion/reveal";
 import PageHero from "../components/PageHero";
 import TextSection from "../components/TextSection";
 import AnimatedSection from "../components/AnimatedSection";
@@ -12,6 +13,8 @@ import { BUSINESS, addressLine } from "../content/business";
 import { Link } from "../router";
 
 export default function Piirkonnad() {
+  const gridReveal = useReveal<HTMLDivElement>(0.02);
+
   return (
     <>
       <PageHero
@@ -48,9 +51,7 @@ export default function Piirkonnad() {
           {/* 15 kaarti – ükshaaval sisse animeerimine muudaks alumised liiga kaua nähtamatuks */}
           <motion.div
             className="county-grid"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.02 }}
+            {...gridReveal}
             variants={fadeUp}
           >
             {/* Tahtlikult div, mitte article: <article> paneb tekstieraldajad (mida

@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../../motion/reveal";
 import AnimatedSection from "../AnimatedSection";
 import { cardPop, fadeUp, staggerContainer, staggerItem } from "../../motion/variants";
 import { SERVICES } from "../../content/services";
 import { Link } from "../../router";
 
 export default function Services() {
+  const gridReveal = useReveal<HTMLDivElement>(0.2);
+
   return (
     <AnimatedSection id="teenused" className="section" variant={fadeUp}>
       <div className="container">
@@ -12,9 +15,7 @@ export default function Services() {
         <h2>Aitame maa- ja metsaomanikke igas olukorras</h2>
         <motion.div
           className="services-grid"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          {...gridReveal}
           variants={staggerContainer}
         >
           {SERVICES.map((service) => (

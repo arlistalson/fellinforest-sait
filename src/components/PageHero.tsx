@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { fadeUp } from "../motion/variants";
+import { useReveal } from "../motion/reveal";
 import Breadcrumbs from "./Breadcrumbs";
 import Button from "./Button";
 import PhoneIcon from "./icons/PhoneIcon";
@@ -13,11 +14,13 @@ interface PageHeroProps {
 }
 
 export default function PageHero({ eyebrow, title, lead, crumb }: PageHeroProps) {
+  const reveal = useReveal(0);
+
   return (
     <section className="page-hero">
       <div className="container">
         <Breadcrumbs current={crumb} />
-        <motion.div initial="hidden" animate="visible" variants={fadeUp}>
+        <motion.div {...reveal} variants={fadeUp}>
           <p className="eyebrow">{eyebrow}</p>
           <h1>{title}</h1>
           <p className="page-hero-lead">{lead}</p>

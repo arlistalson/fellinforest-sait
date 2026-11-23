@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../../motion/reveal";
 import AnimatedSection from "../AnimatedSection";
 import { fadeIn, slideLeft, slideRight, staggerContainer, staggerItem } from "../../motion/variants";
 import Button from "../Button";
@@ -11,22 +12,22 @@ const PROMISES = [
 ];
 
 export default function WhyUs() {
+  const textReveal = useReveal<HTMLDivElement>(0.2);
+  const promisesReveal = useReveal<HTMLDivElement>(0.2);
+  const photoReveal = useReveal<HTMLDivElement>(0.2);
+
   return (
     <AnimatedSection className="section" variant={fadeIn}>
       <div className="container split">
         <motion.div
           className="split-text"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          {...textReveal}
           variants={slideRight}
         >
           <p className="eyebrow">Miks Fellin Forest?</p>
           <h2 className="left">Meie lubadused sulle</h2>
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            {...promisesReveal}
             variants={staggerContainer}
           >
             {PROMISES.map((promise) => (
@@ -46,9 +47,7 @@ export default function WhyUs() {
         <motion.div
           className="photo photo-big"
           style={{ backgroundImage: "url('/images/mets-3.webp')" }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          {...photoReveal}
           variants={slideLeft}
         />
       </div>

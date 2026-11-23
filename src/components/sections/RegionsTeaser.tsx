@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../../motion/reveal";
 import AnimatedSection from "../AnimatedSection";
 import { fadeUp } from "../../motion/variants";
 import { COUNTIES } from "../../content/counties";
@@ -6,6 +7,8 @@ import { Link } from "../../router";
 import { addressLine } from "../../content/business";
 
 export default function RegionsTeaser() {
+  const chipsReveal = useReveal<HTMLUListElement>(0.1);
+
   return (
     <AnimatedSection id="piirkonnad" className="section" variant={fadeUp}>
       <div className="container">
@@ -18,9 +21,7 @@ export default function RegionsTeaser() {
         </p>
         <motion.ul
           className="county-chips"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          {...chipsReveal}
           variants={fadeUp}
         >
           {COUNTIES.map((county) => (

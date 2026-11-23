@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
+import { useReveal } from "../motion/reveal";
 import AnimatedSection from "./AnimatedSection";
 import { fadeUp, staggerContainer, staggerItem } from "../motion/variants";
 
@@ -33,12 +34,12 @@ export default function TextSection({
 }
 
 export function ArrowList({ items }: { items: string[] }) {
+  const listReveal = useReveal<HTMLUListElement>(0.15);
+
   return (
     <motion.ul
       className="arrow-list"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
+      {...listReveal}
       variants={staggerContainer}
     >
       {items.map((item) => (
@@ -56,13 +57,13 @@ export interface InfoCard {
 }
 
 export function InfoGrid({ cards }: { cards: InfoCard[] }) {
+  const gridReveal = useReveal<HTMLDivElement>(0.15);
+
   return (
     <motion.div
       // Neli kaarti näeb 2×2 paremini välja kui 3+1
       className={`info-grid${cards.length === 4 ? " info-grid--two" : ""}`}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
+      {...gridReveal}
       variants={staggerContainer}
     >
       {cards.map((card) => (

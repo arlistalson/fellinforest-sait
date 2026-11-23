@@ -4,6 +4,7 @@ import Footer from "./components/sections/Footer";
 import { Router, useRouter } from "./router";
 import { matchRoute } from "./routes";
 import { absUrl } from "./seo";
+import { markAppHydrated } from "./motion/reveal";
 
 function setMeta(selector: string, attr: string, name: string, content: string) {
   let tag = document.head.querySelector<HTMLMetaElement>(selector);
@@ -53,6 +54,9 @@ function Page() {
 }
 
 export default function App({ url }: { url?: string }) {
+  // Pärast esimest renderdust: hiljem mount'itud plokid animeeruvad ka ekraanil olles.
+  useEffect(markAppHydrated, []);
+
   return (
     <Router url={url}>
       <Page />

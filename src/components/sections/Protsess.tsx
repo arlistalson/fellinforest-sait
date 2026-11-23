@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../../motion/reveal";
 import AnimatedSection from "../AnimatedSection";
 import { cardPop, fadeUp, staggerContainer, staggerItem } from "../../motion/variants";
 import { Link } from "../../router";
@@ -11,6 +12,8 @@ const STEPS = [
 ];
 
 export default function Protsess() {
+  const stepsReveal = useReveal<HTMLDivElement>(0.2);
+
   return (
     <AnimatedSection id="protsess" className="section section-tint" variant={fadeUp}>
       <div className="container">
@@ -23,9 +26,7 @@ export default function Protsess() {
         </p>
         <motion.div
           className="steps"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          {...stepsReveal}
           variants={staggerContainer}
         >
           {STEPS.map((step) => (

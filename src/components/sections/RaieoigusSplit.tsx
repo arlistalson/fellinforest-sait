@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../../motion/reveal";
 import AnimatedSection from "../AnimatedSection";
 import { fadeIn, slideLeft, slideRight, staggerContainer, staggerItem } from "../../motion/variants";
 import Button from "../Button";
@@ -12,14 +13,16 @@ const POINTS = [
 ];
 
 export default function RaieoigusSplit() {
+  const photosReveal = useReveal<HTMLDivElement>(0.2);
+  const textReveal = useReveal<HTMLDivElement>(0.2);
+  const pointsReveal = useReveal<HTMLUListElement>(0.2);
+
   return (
     <AnimatedSection id="raieoigus" className="section" variant={fadeIn}>
       <div className="container split">
         <motion.div
           className="photo-collage"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          {...photosReveal}
           variants={slideRight}
         >
           <div className="photo photo-a" style={{ backgroundImage: "url('/images/mets-1.webp')" }} />
@@ -27,9 +30,7 @@ export default function RaieoigusSplit() {
         </motion.div>
         <motion.div
           className="split-text"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          {...textReveal}
           variants={slideLeft}
         >
           <p className="eyebrow">Raieõigus</p>
@@ -45,9 +46,7 @@ export default function RaieoigusSplit() {
           </p>
           <motion.ul
             className="arrow-list"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            {...pointsReveal}
             variants={staggerContainer}
           >
             {POINTS.map((point) => (

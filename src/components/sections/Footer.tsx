@@ -1,18 +1,19 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../../motion/reveal";
 import { staggerContainer, staggerItem } from "../../motion/variants";
 import PhoneIcon from "../icons/PhoneIcon";
 import { Link } from "../../router";
 import { BUSINESS, addressLine } from "../../content/business";
 
 export default function Footer() {
+  const footerReveal = useReveal<HTMLDivElement>(0.2);
+
   return (
     <footer className="site-footer">
       <div className="container">
         <motion.div
           className="footer-top"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          {...footerReveal}
           variants={staggerContainer}
         >
           <motion.div className="footer-col" variants={staggerItem}>

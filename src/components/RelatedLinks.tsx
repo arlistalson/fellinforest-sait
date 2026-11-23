@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../motion/reveal";
 import AnimatedSection from "./AnimatedSection";
 import { Link } from "../router";
 import { cardPop, fadeUp, staggerContainer, staggerItem } from "../motion/variants";
@@ -15,6 +16,8 @@ interface RelatedLinksProps {
 }
 
 export default function RelatedLinks({ title = "Loe ka", links }: RelatedLinksProps) {
+  const gridReveal = useReveal<HTMLDivElement>(0.15);
+
   return (
     <AnimatedSection className="section section-tint" variant={fadeUp}>
       <div className="container">
@@ -22,9 +25,7 @@ export default function RelatedLinks({ title = "Loe ka", links }: RelatedLinksPr
         <h2>{title}</h2>
         <motion.div
           className="related-grid"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
+          {...gridReveal}
           variants={staggerContainer}
         >
           {links.map((link) => (

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../motion/reveal";
 import { staggerContainer, staggerItem } from "../motion/variants";
 
 export interface ProcessStep {
@@ -7,12 +8,12 @@ export interface ProcessStep {
 }
 
 export default function ProcessSteps({ steps }: { steps: ProcessStep[] }) {
+  const stepsReveal = useReveal<HTMLOListElement>(0.1);
+
   return (
     <motion.ol
       className="process-steps"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      {...stepsReveal}
       variants={staggerContainer}
     >
       {steps.map((step) => (

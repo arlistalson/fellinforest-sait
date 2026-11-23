@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import { fadeUp } from "../../motion/variants";
+import { useReveal } from "../../motion/reveal";
 import Button from "../Button";
 import PhoneIcon from "../icons/PhoneIcon";
 
 export default function Hero() {
+  const reveal = useReveal(0);
+
   return (
     <section className="hero-wrap">
       <div className="container">
         <motion.div
           className="hero-card"
-          initial="hidden"
-          animate="visible"
+          {...reveal}
           variants={fadeUp}
         >
           <p className="eyebrow">Metsa ja raieõiguse ost</p>

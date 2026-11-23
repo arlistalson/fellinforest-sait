@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useReveal } from "../../motion/reveal";
 import { cardPop, staggerContainer, staggerItem } from "../../motion/variants";
 
 const STATS = [
@@ -9,13 +10,13 @@ const STATS = [
 ];
 
 export default function StatsBand() {
+  const statsReveal = useReveal<HTMLDivElement>(0.2);
+
   return (
     <section className="stats-band">
       <motion.div
         className="container stats-grid"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        {...statsReveal}
         variants={staggerContainer}
       >
         {STATS.map((stat) => (

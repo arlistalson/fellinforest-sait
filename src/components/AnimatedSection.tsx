@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { fadeUp } from "../motion/variants";
+import { useReveal } from "../motion/reveal";
 
 const TAGS = {
   section: motion.section,
@@ -30,15 +31,14 @@ export default function AnimatedSection({
   as = "section",
 }: AnimatedSectionProps) {
   const prefersReducedMotion = useReducedMotion();
+  const reveal = useReveal<HTMLDivElement>(0.2);
   const Component = TAGS[as];
 
   return (
     <Component
       id={id}
       className={className}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      {...reveal}
       variants={prefersReducedMotion ? INSTANT : variant}
     >
       {children}

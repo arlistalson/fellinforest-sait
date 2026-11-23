@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useReveal } from "../../motion/reveal";
 import AnimatedSection from "../AnimatedSection";
 import { fadeUp, staggerContainer, staggerItem } from "../../motion/variants";
 import Button from "../Button";
@@ -30,6 +31,7 @@ export default function Faq({
   title = "Mida metsaomanikud kõige rohkem küsivad",
 }: FaqProps) {
   const [open, setOpen] = useState<number | null>(0);
+  const listReveal = useReveal<HTMLDivElement>(0.1);
 
   return (
     <AnimatedSection id="kkk" className="section" variant={fadeUp}>
@@ -39,9 +41,7 @@ export default function Faq({
 
         <motion.div
           className="faq-list"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          {...listReveal}
           variants={staggerContainer}
         >
           {items.map((item, i) => {
