@@ -29,6 +29,7 @@ export default function Footer() {
             <h4>Info</h4>
             <Link to="/hinnakujundus/">Hinnakujundus ja protsess</Link>
             <Link to="/viljandimaa/">Viljandimaa ja teised maakonnad</Link>
+            <Link to="/artiklid/">Artiklid</Link>
             <Link to="/kontakt/">Kontakt</Link>
             <Link to="/kontakt/#hinnaparing">Küsi pakkumist</Link>
           </motion.div>

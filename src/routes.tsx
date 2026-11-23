@@ -21,6 +21,9 @@ import Metsamajandamine from "./pages/Metsamajandamine";
 import Hinnakujundus from "./pages/Hinnakujundus";
 import Kontakt from "./pages/Kontakt";
 import Piirkonnad from "./pages/Piirkonnad";
+import Artiklid from "./pages/Artiklid";
+import EudrRaadamismaarus from "./pages/artiklid/EudrRaadamismaarus";
+import { ARTICLE_EUDR } from "./content/articles";
 import NotFound from "./pages/NotFound";
 
 export interface Route extends PageMeta {
@@ -161,6 +164,34 @@ export const ROUTES: Route[] = [
     faq: FAQ_KONTAKT,
     priority: "0.9",
     changefreq: "yearly",
+  },
+  {
+    path: "/artiklid/",
+    component: Artiklid,
+    source: "src/pages/Artiklid.tsx",
+    breadcrumb: "Artiklid",
+    title: "Artiklid metsaomanikule – Fellin Forest",
+    description:
+      "Selgitused ja juhendid metsaomanikule: metsa müük, raieõigus ja uued nõuded, näiteks EL-i raadamismäärus (EUDR). Lihtsas keeles ja allikatega.",
+    priority: "0.6",
+    changefreq: "weekly",
+  },
+  {
+    path: ARTICLE_EUDR.path,
+    component: EudrRaadamismaarus,
+    source: "src/pages/artiklid/EudrRaadamismaarus.tsx",
+    breadcrumb: "Raadamismäärus (EUDR)",
+    parent: { path: "/artiklid/", breadcrumb: "Artiklid" },
+    title: "Raadamismäärus (EUDR) ja metsa müük – Fellin Forest",
+    description:
+      "Mida tähendab EL-i raadamismäärus metsaomanikule: kes esitab deklaratsiooni, miks palgile ja küttepuule kehtib tähtaeg 30.12.2026 ja kuidas aitab metsaregister.",
+    article: {
+      headline: ARTICLE_EUDR.headline,
+      published: ARTICLE_EUDR.published,
+      modified: ARTICLE_EUDR.modified,
+    },
+    priority: "0.7",
+    changefreq: "monthly",
   },
 ];
 

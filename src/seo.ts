@@ -21,6 +21,10 @@ export interface PageMeta {
   priority?: string;
   changefreq?: string;
   noindex?: boolean;
+  /** Vanemleht teekonnas, nt artikli puhul /artiklid/ */
+  parent?: { path: string; breadcrumb: string };
+  /** Artikli lehtedel: Article-schema ja og:type=article */
+  article?: { headline: string; published: string; modified: string };
 }
 
 export function absUrl(path: string): string {
@@ -167,6 +171,9 @@ function webPage(meta: PageMeta) {
 
 function breadcrumbs(meta: PageMeta) {
   const items = [{ name: "Avaleht", item: `${SITE_URL}/` }];
+  if (meta.parent) {
+    items.push({ name: meta.parent.breadcrumb, item: absUrl(meta.parent.path) });
+  }
   if (meta.path !== "/") {
     items.push({ name: meta.breadcrumb, item: absUrl(meta.path) });
   }
@@ -209,6 +216,24 @@ function serviceNode(meta: PageMeta) {
   };
 }
 
+function articleNode(meta: PageMeta) {
+  if (!meta.article) return null;
+  const url = absUrl(meta.path);
+  return {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: meta.article.headline,
+    description: meta.description,
+    datePublished: meta.article.published,
+    dateModified: meta.article.modified,
+    inLanguage: "et-EE",
+    mainEntityOfPage: { "@id": `${url}#webpage` },
+    author: { "@id": businessId },
+    publisher: { "@id": businessId },
+    image: `${SITE_URL}${meta.ogImage ?? "/images/hero.jpg"}`,
+  };
+}
+
 function faqNode(meta: PageMeta) {
   if (!meta.faq || meta.faq.length === 0) return null;
   return {
@@ -232,6 +257,7 @@ export function buildHead(meta: PageMeta): string {
     webPage(meta),
     breadcrumbs(meta),
     serviceNode(meta),
+    articleNode(meta),
     faqNode(meta),
   ].filter(Boolean);
 
@@ -240,7 +266,13 @@ export function buildHead(meta: PageMeta): string {
     `<meta name="description" content="${esc(meta.description)}">`,
     `<link rel="canonical" href="${url}">`,
     meta.noindex ? `<meta name="robots" content="noindex, follow">` : `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">`,
-    `<meta property="og:type" content="website">`,
+    `<meta property="og:type" content="${meta.article ? "article" : "website"}">`,
+    ...(meta.article
+      ? [
+          `<meta property="article:published_time" content="${meta.article.published}">`,
+          `<meta property="article:modified_time" content="${meta.article.modified}">`,
+        ]
+      : []),
     `<meta property="og:site_name" content="${esc(BUSINESS.name)}">`,
     `<meta property="og:title" content="${esc(meta.title)}">`,
     `<meta property="og:description" content="${esc(meta.description)}">`,

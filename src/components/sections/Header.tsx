@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { to: "/raieoiguse-ost/", label: "Raieõigus" },
   { to: "/pollumaa-ost/", label: "Põllumaa" },
   { to: "/hinnakujundus/", label: "Hinnakujundus" },
+  { to: "/artiklid/", label: "Artiklid" },
   { to: "/kontakt/", label: "Kontakt" },
 ];
 

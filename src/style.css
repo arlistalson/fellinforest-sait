@@ -1250,3 +1250,62 @@ a { color: var(--green); }
 @media (max-width: 760px) {
   .info-grid--two { grid-template-columns: 1fr; }
 }
+
+/* Artiklid */
+.page-hero-meta {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin: -6px 0 18px;
+}
+.article-card-label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+.compare-table td.nowrap { white-space: nowrap; }
+.source-list {
+  max-width: 72ch;
+  padding-left: 20px;
+  margin: 0 0 22px;
+  color: var(--ink-soft);
+}
+.source-list li { margin-bottom: 8px; }
+.source-list a { color: var(--green); }
+.article-disclaimer {
+  font-size: 0.9rem;
+  border-left: 3px solid var(--green-bright);
+  padding-left: 14px;
+}
+
+/* Kaheksa menüülinki + nupp ei mahu kitsamale ekraanile ühte ritta –
+   alla 1040px näitame sama hamburger-menüüd mis mobiilis. */
+@media (max-width: 1040px) {
+  .site-header .nav-desktop { display: none; }
+  .header-inner .nav-toggle { display: inline-flex; }
+  .header-inner .mobile-menu { display: flex; }
+}
+
+/* Tähtaegade tabel: kitsal ekraanil iga rida kaardina, et kuupäev oleks kohe näha */
+@media (max-width: 600px) {
+  .deadline-table { min-width: 0; }
+  .deadline-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .deadline-table tr,
+  .deadline-table th,
+  .deadline-table td { display: block; width: auto; }
+  .deadline-table tbody th { width: auto; padding-bottom: 6px; }
+  .deadline-table td { border-top: 0; padding-top: 4px; white-space: normal; }
+  .deadline-table td[data-label]::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--green);
+  }
+}
